@@ -1,0 +1,269 @@
+---
+title: "PSYC 670 - Fall 2023 - Course Project"
+author: "AJ Thurston"
+date: "2023-11-20"
+format: 
+  html:
+    toc: TRUE
+    toc-location: left
+    code-fold: true
+    code-summary: "Code"
+---
+
+## Introduction
+
+The information prior to the Descriptive Statistics section is for your future benefit. Jump straight to the Descriptive Statistics section to get to the data you need for the project.
+
+## Setup
+```{r setup, message = FALSE, warning = FALSE}
+library(summarytools)
+library(Hmisc)
+library(tidyverse)
+library(foreign)
+library(lavaan)
+library(openxlsx)
+library(gtools)
+library(lm.beta)
+library(domir)
+```
+
+## Data Import
+```{r import}
+df <- read.csv("Capstone Dataframe.csv") 
+df <- df %>%
+  mutate(across(where(is.numeric), ~na_if(., -9))) %>%
+  filter(complete.cases(.))
+```
+
+## Data Recode
+### Demographics Recode
+```{r recode}
+df$white <- df$race %>%
+  recode(.,
+         `1` = 1,
+         `2` = 0,
+         `3` = 0,
+         `4` = 0,
+         `5` = 0)
+
+df$black <- df$race %>%
+  recode(.,
+         `1` = 0,
+         `2` = 1,
+         `3` = 0,
+         `4` = 0,
+         `5` = 0)
+
+df$hispa <- df$race %>%
+  recode(.,
+         `1` = 0,
+         `2` = 0,
+         `3` = 1,
+         `4` = 0,
+         `5` = 0)
+
+df$asian <- df$race %>%
+  recode(.,
+         `1` = 0,
+         `2` = 0,
+         `3` = 0,
+         `4` = 1,
+         `5` = 0)
+
+df$other <- df$race %>%
+  recode(.,
+         `1` = 0,
+         `2` = 0,
+         `3` = 0,
+         `4` = 0,
+         `5` = 1)
+
+df$minority <- df$race %>%
+  recode(.,
+         `1` = 0,
+         `2` = 1,
+         `3` = 1,
+         `4` = 1,
+         `5` = 1)
+
+```
+
+### Job Knowledge
+```{r knowledge}
+df <- df %>%
+  mutate(jks = rowSums(across(c(jk1, jk2, jk3))))
+```
+
+### Conscientiousness
+```{r conscientiousness}
+df <- df %>%
+  mutate(conm = rowMeans(across(c(con1, con2, con3, con4))))
+```
+
+### Emotional Stability
+```{r emotional stability}
+df <- df %>%
+  mutate(emom = rowMeans(across(c(emo1, emo2, emo3, emo4))))
+```
+
+### Interview
+```{r interview}
+df <- df %>%
+  mutate(intm = rowMeans(across(c(int1, int2, int3))))
+```
+
+## Descriptive Statistics
+
+Refer back to the codebook to ensure you are tracking what values correspond to different categories (e.g., variable: male, 0 = female, 1 = male)
+
+You can use the dataframe summary to talk generally about the sample. For example, this will tell you the proportion of males in the sample, and the 'white' variable will report the racial/ethnic majority/minority proportion.You should also report a table or a figure of the descriptive statistics by gender in your report since the focus of this effort is to better the selection ratios in favor of female applicants.
+
+```{r descriptives}
+dfSummary(df)
+
+df %>%
+  group_by(male) %>%
+  summarise(
+    count = n(),
+    exp.m = mean(exp),
+    exp.sd = sd(exp),
+    jks.m = mean(jks),
+    jks.sd = sd(jks),
+    conm.m = mean(conm),
+    conm.sd = sd(conm),
+    emom.m = mean(emom),
+    emom.sd = sd(emom),
+    intm.m = mean(intm),
+    intm.sd = sd(intm),
+    lapr.m = mean(lapr),
+    lapr.sd = sd(lapr)
+  ) %>%
+  t()
+```
+
+## Group Differences
+
+In addition to the group differences calculated above, ensure you denote any statistically significant differences between males and females on the focal variables of interest for this study.
+
+```{r group differences}
+t.test(exp ~ male, var.equal=TRUE, data = df)
+t.test(jks ~ male, var.equal=TRUE, data = df)
+t.test(conm ~ male, var.equal=TRUE, data = df)
+t.test(emom ~ male, var.equal=TRUE, data = df)
+t.test(intm ~ male, var.equal=TRUE, data = df)
+```
+## Correlations
+
+For these correlation results, the top table is the Pearson product-moment correlation, the bottom table is the p-values associated with each (i.e., statistical signficance). You can create a table of correlations, report them in the text of the technical report, or both.
+
+```{r correlations}
+df.cor <- df %>%
+  subset(select = c(male,white,age,dis,vet,exp,jks,conm,emom,intm))
+rcorr(as.matrix(df.cor))
+```
+
+## Regression
+
+This is the penultimate analysis for this project, we need to demostrate the criterion-related validity of the battery. You can either report the table of the ANOVA results here, write about the results in the text of your technical report, or both.
+
+```{r final}
+mod1 <- lm(data = df, lapr ~ 1)  # to obtain Total SS
+mod2 <- lm(data = df, lapr ~ jks)  # Model 2
+mod3 <- lm(data = df, lapr ~ exp + jks + conm + emom + intm)  # Model 3
+anova(mod1,mod2,mod3)
+
+mod2 %>%
+  lm.beta(.) %>%
+  summary(.)
+
+mod3 %>%
+  lm.beta(.) %>%
+  summary(.)
+
+# Save predicted values
+df$pred_jksonly <- predict(mod2)
+df$pred_battery <- predict(mod3)
+```
+
+## Dominance
+
+What you see reported here are the general dominance weights for each predictor included in the battery. So this is the unique portion of the R^2 (r-squared) attributable to experience, job knowledge test, conscientiousness, emotional stability, and average interview score, respectively. If you go back to the regression Model 2 results, you can compare that R^2 to these results to discuss the incremental validity of the new battery over the singular job knowledge test. 
+
+You can either report these results in a table, write about them in the text of your document, or both and I would recommend both. You can [take inspiration from my visualization of dominance analysis](https://github.com/AJThurston/dominance), but I would recommend putting these values in an Excel chart instead of trying to replicate my visualization in R.
+
+```{r dominance}
+dom <- domin(data = df,
+              formula = lapr ~ exp + jks + conm + emom + intm,
+              reg = lm, 
+              fitstat = list(summary, "r.squared"))
+round(dom$General_Dominance,2)
+```
+
+## Expectancy analysis
+
+This is where we will help the client to determine the cut score for the test. They accept about 20% of applicants for fire officers per year, so we've split the predicted scores into quintiles (fifths) so they can see those with the highest predicted job performance were most likely to have the greatest job performance in actuality.
+
+I would recommend you, again, [take inspiration from my deeper dive into expectancy charts](https://github.com/AJThurston/expectancy), but, again, would recommend you simply copy/paste these values into an Excel bar chart rather than trying to replicate my work in R.
+
+```{r expectancy}
+df <- df %>%
+  mutate(pred_jksonly_quant = quantcut(pred_jksonly, q = c(0,.2,.4,.6,.8,1), labels = F)) %>%
+  mutate(pred_battery_quant = quantcut(pred_battery, q = c(0,.2,.4,.6,.8,1), labels = F))
+
+df %>%
+  group_by(pred_jksonly_quant) %>%
+  summarize(m = mean(lapr))
+
+df %>%
+  group_by(pred_battery_quant) %>%
+  summarize(m = mean(lapr))
+```
+
+## Adverse Impact Analyses
+
+The goal of this project was to reduce the adverse impact of the selection system on female applicants, these last two values demonstrate exactly that. Refer back to the personnel decisions lecture on how to interpret these with the 80% rule.NOTE: I got the 80% rule backwards when I generated these data, if it's above 80% it's NOT considered adverse impact. The output below is notional (made up) and will not match the data analysis if you try to run this yourself.
+
+```{r ai}
+df <- df %>%
+  mutate(pred_jksonly_pass = quantcut(pred_jksonly, q = c(0,.80,1), labels = F)-1) %>%
+  mutate(pred_battery_pass = quantcut(pred_battery, q = c(0,.80,1), labels = F)-1) 
+
+observed <- xtabs(~ male + pred_jksonly_pass, data=df)
+
+pass_male <- observed[2,2]
+fail_male <- observed[2,1]
+N_male <- pass_male + fail_male
+sr_male <- pass_male / N_male
+
+pass_female <- observed[1,2]
+fail_female <- observed[1,1]
+N_female <- pass_female + fail_female
+
+sr_female <- pass_female/N_female
+
+
+jks_only_sex_ir <- sr_female/sr_male 
+# print(paste0("SR females/males using only Job Knowledge Test: ", round(jks_only_sex_ir,2)))
+print("SR females/males using only Job Knowledge Test: 0.53")
+
+# ---
+observed <- xtabs(~ male + pred_battery_pass, data=df)
+
+pass_male <- observed[2,2]
+fail_male <- observed[2,1]
+N_male <- pass_male + fail_male
+sr_male <- pass_male / N_male
+
+pass_female <- observed[1,2]
+fail_female <- observed[1,1]
+N_female <- pass_female + fail_female
+sr_female <- pass_female / N_female
+
+
+pred_battery_sex_ir <- sr_female/sr_male
+# print(paste0("SR females/males using new battery: ", round(pred_battery_sex_ir,2)))
+print("SR females/males using new battery: 0.91")
+```
+
+## Final Note
+You are welcome to use the raw data and are invited to do any additional data analyses but are not required to do so.

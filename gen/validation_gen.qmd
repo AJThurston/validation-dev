@@ -1,0 +1,540 @@
+---
+title: "Capstone"
+author: "AJ Thurston"
+date: "2023-07-14"
+format: html
+editor: source
+link-citations: true
+---
+
+## Setup
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r setup}
+library(summarytools)
+library(tidyverse)
+library(foreign)
+library(lavaan)
+library(openxlsx)
+library(gtools)
+library(lm.beta)
+library(domir)
+sessionInfo()
+```
+
+## Data Codebook
+
+`id`: Applicant ID number
+
+`male`: Applicant sex is male\
+0. Female\
+1. Male\
+-9. Decline to respond
+
+`race`: Applicant race/ethnicity\
+1. White, non-Hispanic\
+2. Black, non-Hispanic\
+3. Hispanic\
+4. Asian, non-Hispanic\
+5. Other, non-Hispanic\
+-9. Missing
+
+`age`: Applicant age in years\
+\[value in years\] -9. Missing
+
+`vet`: Applicant veteran status\
+0. Non-veteran\
+1. Veteran\
+-8. Missing\
+-9. Decline to respond
+
+`dis`: Applicant self-reported disability status\
+0. Not disabled\
+1. Disabled\
+-9. Missing
+
+`exp`: Applicant tenure in months
+
+`jk1`: Job knowledge dimension 1: fire science\
+\[Percentile score\]
+
+`jk2`: Job knowledge dimension 2: hazardous materials\
+\[Percentile score\]
+
+`jk3`: Job knowledge dimension 3: incident management\
+\[Percentile score\]
+
+`con1`: Conscientiousness item 1: Get chores done right away\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`con2`: Conscientiousness item 2: Often forget to put things back in their proper place. (Reverse scored)\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`con3`: Conscientiousness item 3: Like order.\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`con4`: Conscientiousness item 4: Make a mess of things. (Reverse scored)\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`emo1`: Emotional stability item 1: Have frequent mood swings.(Reverse scored)\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`emo2`: Emotional stability item 2: Am relaxed most of the time.\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`emo3`: Emotional stability item 3: Get upset easily. (Reverse scored)\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`emo4`: Emotional stability item 4: Seldom feel blue.\
+1. Strongly disagree\
+2. Disagree\
+3. Neither agree nor disagree\
+4. Agree\
+5. Strongly agree\
+-9. Missing
+
+`int1`: Interview rater 1 assessment\
+1. Below expectations\
+2. Meets expectations\
+3. Above expectations
+
+`int2`: Interview rater 2 assessment\
+1. Below expectations\
+2. Meets expectations\
+3. Above expectations
+
+`int3`: Interview rater 3 assessment\
+1. Below expectations\
+2. Meets expectations\
+3. Above expectations
+
+## Data Parameters
+
+```{r parameters}
+cor <- read.xlsx("cormat.xlsx", sheet = "cor", colNames = T) 
+cor[upper.tri(cor)] <- t(cor)[upper.tri(cor)] 
+cor <- as.matrix(cor)
+
+sd <- read.xlsx("cormat.xlsx", sheet = "sd", colNames = T) %>% 
+  as.matrix() %>% 
+  unlist() %>%
+  array() %>% 
+  
+  as.numeric()
+mu <- read.xlsx("cormat.xlsx", sheet = "mu", colNames = T) %>% as.matrix()%>%
+  unlist() %>%
+  array() %>%
+  as.numeric()
+
+cov <- cor2cov(cor,sd)
+cov <- cov + diag(ncol(cov))*0.1
+```
+
+## Data Generation
+
+```{r generation}
+set.seed("01234")
+df_raw <- MASS::mvrnorm(n = 323, mu = mu, Sigma = cov, tol = .2) %>%
+  as.data.frame()
+colnames(df_raw) <- colnames(cor)
+```
+
+## Data Recode - Demographics Recode
+
+```{r recode}
+df <- df_raw %>%
+  mutate(male_f = (quantcut(male,   q = c(0,mean(male),1), labels = F)-2)*-1) %>%
+  mutate(white_f = quantcut(white, q = c(0,1-.58,1), labels = F)-1) %>%
+  mutate(black_f = quantcut(black, q = c(0,1-.12,1), labels = F)-1) %>%
+  mutate(hispa_f = quantcut(hispa, q = c(0,1-.26,1), labels = F)-1) %>%
+  mutate(asian_f = quantcut(asian, q = c(0,1-.03,1), labels = F)-1) %>%
+  mutate(other_f = quantcut(other, q = c(0,1-.01,1), labels = F)-1) %>%
+  mutate(vet_f = quantcut(vet, q = c(0,1-.10,1), labels = F)-1) %>%
+  mutate(dis_f = quantcut(dis, q = c(0,1-.05,1), labels = F)-1)
+
+df <- df %>%
+  mutate(race = paste(white_f, black_f, hispa_f, asian_f, other_f, sep = "")) %>%
+  mutate(race2 = case_when(str_detect(race, "^1") ~ "white",
+                           str_detect(race, "^01") ~ "black",
+                           str_detect(race, "^001") ~ "hispa",
+                           str_detect(race, "^0001") ~ "asian",
+                           str_detect(race, "^00001") ~ "other",
+                           str_detect(race, "^00000") ~ "recode_me"))
+
+tmp <- "recode_me"
+races <- c("other","asian","hispa","black")
+probs <- c(0.01, 0.03, 0.26, 0.12)
+
+df <- df %>% mutate(across(race2, ~ifelse(.x %in% tmp, sample(races, size=n(), prob=probs, replace=TRUE), .x)))
+df$race_final <- df$race2 %>%
+  recode(.,
+         `white` = 1,
+         `black` = 2,
+         `hispa` = 3,
+         `asian` = 4,
+         `other` = 5)
+
+df$minority <- df$race_final %>%
+  recode(.,
+         `1` = 0,
+         `2` = 1,
+         `3` = 1,
+         `4` = 1,
+         `5` = 1)
+
+df$white_final <- df$race_final %>%
+  recode(.,
+         `1` = 1,
+         `2` = 0,
+         `3` = 0,
+         `4` = 0,
+         `5` = 0)
+
+df$black_final <- df$race_final %>%
+  recode(.,
+         `1` = 0,
+         `2` = 1,
+         `3` = 0,
+         `4` = 0,
+         `5` = 0)
+
+df$hispa_final <- df$race_final %>%
+  recode(.,
+         `1` = 0,
+         `2` = 0,
+         `3` = 1,
+         `4` = 0,
+         `5` = 0)
+
+df$asian_final <- df$race_final %>%
+  recode(.,
+         `1` = 0,
+         `2` = 0,
+         `3` = 0,
+         `4` = 1,
+         `5` = 0)
+
+df$other_final <- df$race_final %>%
+  recode(.,
+         `1` = 0,
+         `2` = 0,
+         `3` = 0,
+         `4` = 0,
+         `5` = 1)
+
+# df$age_final <- log(df$age)*-1
+df$age_final <- (df$age*3)+27
+df$age_final <- round(df$age_final)
+
+df$exp_final <- round((df$exp*5)+35, digits = 0)
+```
+
+## Data Recode - Job Knowledge
+
+```{r knowledge}
+df$jk1_final <- round((df$jk1*2)+25, digits = 0)
+df$jk2_final <- round((df$jk2*2)+25, digits = 0)
+df$jk3_final <- round((df$jk3*2)+25, digits = 0)
+
+df <- df %>%
+  mutate(jks = rowSums(across(c(jk1_final, jk2_final, jk3_final))))
+```
+
+## Data Recode - Conscientiousness
+
+```{r}
+df$con1_final <- round((df$con1*.65)+1, digits = 0)+2
+df$con2_final <- 6-df$con1_final
+df$con2_final <- round((df$con2*.75)+1, digits = 0)+2
+df$con3_final <- round((df$con3*.60)+1, digits = 0)+2
+df$con3_final <- 6-df$con3_final
+df$con4_final <- round((df$con4*.70)+1, digits = 0)+2
+
+df <- df %>%
+  mutate(conm = rowMeans(across(c(con1_final, con2_final, con3_final, con4_final))))
+
+df <- df %>%
+  mutate_at(vars(con1_final:con4_final), funs(recode(.,`6` = 5)))%>%
+  mutate_at(vars(con1_final:con4_final), funs(recode(.,`0` = 1)))
+```
+
+## Data Recode - Emotional Stability
+
+```{r emotional stability}
+df$emo1_final <- round((df$emo1*.5)+1, digits = 0)+2
+df$emo2_final <- round((df$emo2*.62)+1, digits = 0)+1
+df$emo2_final <- 6-df$emo2_final
+df$emo3_final <- round((df$emo3*.75)+1, digits = 0)+2
+df$emo4_final <- round((df$emo4*.65)+1, digits = 0)+2
+df$emo4_final <- 6-df$emo4_final
+
+df <- df %>%
+  mutate(emom = rowMeans(across(c(emo1_final, emo2_final, emo3_final, emo4_final))))
+df <- df %>%
+  mutate_at(vars(emo1_final:emo4_final), funs(recode(.,`6` = 5))) %>%
+  mutate_at(vars(emo1_final:emo4_final), funs(recode(.,`0` = 1)))
+```
+
+## Data Recode - Interview
+
+```{r interview}
+df <- df %>%
+  mutate(int1_final = quantcut(int1, q = c(0,.21,.8,1), labels = F)) %>%
+  mutate(int2_final = quantcut(int2, q = c(0,.18,.73,1), labels = F)) %>%
+  mutate(int3_final = quantcut(int3, q = c(0,.3,.75,1), labels = F))
+
+df <- df %>%
+  mutate(intm = rowMeans(across(c(int1_final, int2_final, int3_final))))
+```
+
+## Data Recode - Performance
+
+```{r performance}
+df <- df %>%
+  mutate(perf_final = quantcut(perf, q = c(0,.16,.34,.68,.84,1), labels = F))
+freq(df$perf_final)
+```
+
+## Regression
+
+```{r final}
+mod0 <- lm(data = df, perf_final ~ 1)  # to obtain Total SS
+mod1 <- lm(data = df, perf_final ~ male + black_final + hispa_final + asian_final + other_final + age_final + dis_f + vet_f)  # Model 1
+mod2 <- lm(data = df, perf_final ~ jks)  # Model 2
+mod3 <- lm(data = df, perf_final ~ exp_final + jks + conm + emom + intm)  # Model 2
+anova(mod0,mod1,mod2,mod3)
+
+mod2 %>%
+  lm.beta(.) %>%
+  summary(.)
+mod3 %>%
+  lm.beta(.) %>%
+  summary(.)
+
+# Save predicted values
+df$pred_jksonly <- predict(mod2)
+df$pred_battery <- predict(mod3)
+
+```
+
+## Dominance
+
+```{r dominance}
+dom2 <- domin(data = df,
+              formula = perf_final ~ exp_final + jks + conm + emom + intm,
+              reg = lm, 
+              fitstat = list(summary, "r.squared"))
+dom2
+round(dom2$General_Dominance,2)
+```
+
+## Expectancy analysis
+
+```{r expectancy}
+df <- df %>%
+  mutate(pred_jksonly_pass = quantcut(pred_jksonly, q = c(0,.80,1), labels = F)-1) %>%
+  mutate(pred_jksonly_quant = quantcut(pred_jksonly, q = c(0,.2,.4,.6,.8,1), labels = F)) %>%
+  mutate(pred_battery_pass = quantcut(pred_battery, q = c(0,.80,1), labels = F)-1) %>%
+  mutate(pred_battery_quant = quantcut(pred_battery, q = c(0,.2,.4,.6,.8,1), labels = F))
+
+# freq(df$pred_battery_pass)
+# freq(df$pred_battery_quant)
+# freq(df$pred_jksonly_pass)
+# freq(df$pred_jksonly_quant)
+
+exp_jksonly <- df %>%
+  group_by(pred_jksonly_quant) %>%
+  summarize(m = mean(perf_final)) %>%
+  rename(quant = pred_jksonly_quant) %>%
+  mutate(system = "jksonly")
+
+exp_battery <- df %>%
+  group_by(pred_battery_quant) %>%
+  summarize(m = mean(perf_final)) %>%
+  rename(quant = pred_battery_quant) %>%
+  mutate(system = "battery")
+
+
+exp <- bind_rows(exp_jksonly,exp_battery) %>%
+  mutate(system = factor(system, levels = c("jksonly","battery")))
+
+exp %>%
+  ggplot(aes(x = quant, y = m, fill = system)) +
+  geom_bar(stat = "identity") +
+  facet_grid(cols = vars(system)) +
+  labs(
+    x = "Quantile",
+    y = "Mean Performance Rating"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## Adverse Impact Analyses
+
+```{r ai}
+# Sex 
+# Job Knowledge Test Only
+observed <- xtabs(~ male_f + pred_jksonly_pass, data=df)
+
+pass_male <- observed[2,2]
+fail_male <- observed[2,1]
+N_male <- pass_male + fail_male
+sr_male <- pass_male / N_male
+
+pass_female <- observed[1,2]
+fail_female <- observed[1,1]
+N_female <- pass_female + fail_female
+
+sr_female <- pass_female/N_female
+
+jks_only_sex_ir <- sr_female/sr_male
+
+# Larger Battery
+observed <- xtabs(~ male_f + pred_battery_pass, data=df)
+
+pass_male <- observed[2,2]
+fail_male <- observed[2,1]
+N_male <- pass_male + fail_male
+sr_male <- pass_male / N_male
+
+pass_female <- observed[1,2]
+fail_female <- observed[1,1]
+N_female <- pass_female + fail_female
+sr_female <- pass_female / N_female
+
+pred_battery_sex_ir <- sr_female/sr_male
+
+
+# Race 
+# Job Knowledge Test Only
+df$majority <- 1-df$minority
+observed <- xtabs(~ majority + pred_jksonly_pass, data=df)
+
+pass_majority <- observed[1,2]
+fail_majority <- observed[1,1]
+N_majority <- pass_majority + fail_majority
+sr_majority <- pass_majority / N_majority
+
+pass_minority <- observed[2,2]
+fail_minority <- observed[2,1]
+N_minority <- pass_minority + fail_minority
+
+sr_minority <- pass_minority / N_minority
+
+jks_only_race_ir <- sr_minority/sr_majority
+
+# Larger Battery
+observed <- xtabs(~ majority + pred_battery_pass, data=df)
+
+pass_majority <- observed[1,2]
+fail_majority <- observed[1,1]
+N_majority <- pass_majority + fail_majority
+sr_majority <- pass_majority / N_majority
+
+pass_minority <- observed[2,2]
+fail_minority <- observed[2,1]
+N_minority <- pass_minority + fail_minority
+
+sr_minority <- pass_minority / N_minority
+
+pred_battery_race_ir <- sr_minority/sr_majority
+
+# Summary Table
+irs <- tibble(
+  Ratio = c(
+    "Sex Impact Ratio - Job Knowledge Test Only: ",
+    "Sex Impact Ratio - Larger Battery:",
+    "Sex Impact Ratio - Job Knowledge Test Only: ",
+    "Sex Impact Ratio - Larger Battery:"
+  ),
+  Value = c(
+    floor(jks_only_sex_ir*1000+.5)/1000,
+    floor(pred_battery_sex_ir*1000+.5)/1000,
+    floor(jks_only_race_ir*1000+.5)/1000,
+    floor(pred_battery_race_ir*1000+.5)/1000
+  )
+)
+
+irs <- irs %>%
+  mutate(`Adverse Impact` = Value < .8)
+irs
+```
+When the impact ratio of female selection ratio/male selection ratio is greater than .80 (80%, 4/5ths) this suggests evidence there is ***not*** disparate impact. When the impact ratio is less than 80%, this suggests evidence of disparate impact.
+
+## Final Dataset
+
+```{r finaldf, eval=FALSE, include=FALSE}
+set.seed("01234")
+df$id <- sample(size = dim(df)[1], x=c(10000:99999), replace = FALSE)
+
+df_final <- df %>%
+  select(c(
+    id,
+    male_f,
+    race_final,
+    age_final,
+    exp_final,
+    dis_f,
+    vet_f,
+    jk1_final,
+    jk2_final,
+    jk3_final,
+    con1_final,
+    con2_final,
+    con3_final,
+    con4_final,
+    emo1_final,
+    emo2_final,
+    emo3_final,
+    emo4_final,
+    int1_final,
+    int2_final,
+    int3_final,
+    perf_final))
+
+names(df_final)[names(df_final) == 'perf_final'] <- 'lapr'
+
+names(df_final) <- sub('_.*', "", names(df_final))
+dfSummary(df_final)
+
+filename <- paste("C:/Users/AJ Thurston/OneDrive/Desktop/df_",format(Sys.time(), "%Y-%M-%d_%H%M"),".csv", sep = "")
+
+write.csv(df_final, filename, row.names = FALSE) 
+```

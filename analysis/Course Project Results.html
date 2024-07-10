@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.242">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="AJ Thurston">
+<meta name="dcterms.date" content="2023-11-20">
+
+<title>PSYC 670 - Fall 2023 - Course Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Course Project Results_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Course Project Results_files/libs/quarto-html/quarto.js"></script>
+<script src="Course Project Results_files/libs/quarto-html/popper.min.js"></script>
+<script src="Course Project Results_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Course Project Results_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Course Project Results_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Course Project Results_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Course Project Results_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Course Project Results_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Course Project Results_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#data-import" id="toc-data-import" class="nav-link" data-scroll-target="#data-import">Data Import</a></li>
+  <li><a href="#data-recode" id="toc-data-recode" class="nav-link" data-scroll-target="#data-recode">Data Recode</a>
+  <ul class="collapse">
+  <li><a href="#demographics-recode" id="toc-demographics-recode" class="nav-link" data-scroll-target="#demographics-recode">Demographics Recode</a></li>
+  <li><a href="#job-knowledge" id="toc-job-knowledge" class="nav-link" data-scroll-target="#job-knowledge">Job Knowledge</a></li>
+  <li><a href="#conscientiousness" id="toc-conscientiousness" class="nav-link" data-scroll-target="#conscientiousness">Conscientiousness</a></li>
+  <li><a href="#emotional-stability" id="toc-emotional-stability" class="nav-link" data-scroll-target="#emotional-stability">Emotional Stability</a></li>
+  <li><a href="#interview" id="toc-interview" class="nav-link" data-scroll-target="#interview">Interview</a></li>
+  </ul></li>
+  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics">Descriptive Statistics</a></li>
+  <li><a href="#group-differences" id="toc-group-differences" class="nav-link" data-scroll-target="#group-differences">Group Differences</a></li>
+  <li><a href="#correlations" id="toc-correlations" class="nav-link" data-scroll-target="#correlations">Correlations</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a></li>
+  <li><a href="#dominance" id="toc-dominance" class="nav-link" data-scroll-target="#dominance">Dominance</a></li>
+  <li><a href="#expectancy-analysis" id="toc-expectancy-analysis" class="nav-link" data-scroll-target="#expectancy-analysis">Expectancy analysis</a></li>
+  <li><a href="#adverse-impact-analyses" id="toc-adverse-impact-analyses" class="nav-link" data-scroll-target="#adverse-impact-analyses">Adverse Impact Analyses</a></li>
+  <li><a href="#final-note" id="toc-final-note" class="nav-link" data-scroll-target="#final-note">Final Note</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PSYC 670 - Fall 2023 - Course Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>AJ Thurston </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 20, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The information prior to the Descriptive Statistics section is for your future benefit. Jump straight to the Descriptive Statistics section to get to the data you need for the project.</p>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(summarytools)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtools)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lm.beta)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(domir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="data-import" class="level2">
+<h2 class="anchored" data-anchor-id="data-import">Data Import</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Capstone Dataframe.csv"</span>) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">na_if</span>(., <span class="sc">-</span><span class="dv">9</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="data-recode" class="level2">
+<h2 class="anchored" data-anchor-id="data-recode">Data Recode</h2>
+<section id="demographics-recode" class="level3">
+<h3 class="anchored" data-anchor-id="demographics-recode">Demographics Recode</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>white <span class="ot">&lt;-</span> df<span class="sc">$</span>race <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(.,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>black <span class="ot">&lt;-</span> df<span class="sc">$</span>race <span class="sc">%&gt;%</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(.,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>hispa <span class="ot">&lt;-</span> df<span class="sc">$</span>race <span class="sc">%&gt;%</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(.,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>asian <span class="ot">&lt;-</span> df<span class="sc">$</span>race <span class="sc">%&gt;%</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(.,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>other <span class="ot">&lt;-</span> df<span class="sc">$</span>race <span class="sc">%&gt;%</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(.,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>minority <span class="ot">&lt;-</span> df<span class="sc">$</span>race <span class="sc">%&gt;%</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(.,</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="job-knowledge" class="level3">
+<h3 class="anchored" data-anchor-id="job-knowledge">Job Knowledge</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">jks =</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">c</span>(jk1, jk2, jk3))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="conscientiousness" class="level3">
+<h3 class="anchored" data-anchor-id="conscientiousness">Conscientiousness</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">conm =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(con1, con2, con3, con4))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="emotional-stability" class="level3">
+<h3 class="anchored" data-anchor-id="emotional-stability">Emotional Stability</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">emom =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(emo1, emo2, emo3, emo4))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="interview" class="level3">
+<h3 class="anchored" data-anchor-id="interview">Interview</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">intm =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(int1, int2, int3))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="descriptive-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics</h2>
+<p>Refer back to the codebook to ensure you are tracking what values correspond to different categories (e.g., variable: male, 0 = female, 1 = male)</p>
+<p>You can use the dataframe summary to talk generally about the sample. For example, this will tell you the proportion of males in the sample, and the ‘white’ variable will report the racial/ethnic majority/minority proportion.You should also report a table or a figure of the descriptive statistics by gender in your report since the focus of this effort is to better the selection ratios in favor of female applicants.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dfSummary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data Frame Summary  
+df  
+Dimensions: 320 x 32  
+Duplicates: 0  
+
+------------------------------------------------------------------------------------------------------------------
+No   Variable    Stats / Values                  Freqs (% of Valid)    Graph                  Valid      Missing  
+---- ----------- ------------------------------- --------------------- ---------------------- ---------- ---------
+1    id          Mean (sd) : 54633.7 (25031.5)   320 distinct values               :          320        0        
+     [integer]   min &lt; med &lt; max:                                        : . :   : :          (100.0%)   (0.0%)   
+                 10800 &lt; 55144 &lt; 99611                                 : : : : : : : . :                          
+                 IQR (CV) : 41672.5 (0.5)                              : : : : : : : : :                          
+                                                                       : : : : : : : : :                          
+
+2    male        Min  : 0                        0 :  96 (30.0%)       IIIIII                 320        0        
+     [integer]   Mean : 0.7                      1 : 224 (70.0%)       IIIIIIIIIIIIII         (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+3    race        Mean (sd) : 1.8 (1)             1 : 184 (57.5%)       IIIIIIIIIII            320        0        
+     [integer]   min &lt; med &lt; max:                2 :  50 (15.6%)       III                    (100.0%)   (0.0%)   
+                 1 &lt; 1 &lt; 5                       3 :  71 (22.2%)       IIII                                       
+                 IQR (CV) : 2 (0.6)              4 :  11 ( 3.4%)                                                  
+                                                 5 :   4 ( 1.2%)                                                  
+
+4    age         Mean (sd) : 28.4 (3.2)          18 distinct values            :              320        0        
+     [integer]   min &lt; med &lt; max:                                            . :              (100.0%)   (0.0%)   
+                 20 &lt; 29 &lt; 40                                              . : :                                  
+                 IQR (CV) : 4 (0.1)                                        : : : :                                
+                                                                       . : : : : : :                              
+
+5    exp         Mean (sd) : 37.5 (5.4)          30 distinct values          : .              320        0        
+     [integer]   min &lt; med &lt; max:                                          : : :              (100.0%)   (0.0%)   
+                 21 &lt; 37 &lt; 56                                              : : :                                  
+                 IQR (CV) : 8 (0.1)                                      . : : :                                  
+                                                                         : : : : .                                
+
+6    dis         Min  : 1                        1 : 303 (94.7%)       IIIIIIIIIIIIIIIIII     320        0        
+     [integer]   Mean : 1.1                      2 :  17 ( 5.3%)       I                      (100.0%)   (0.0%)   
+                 Max  : 2                                                                                         
+
+7    vet         Min  : 0                        0 : 288 (90.0%)       IIIIIIIIIIIIIIIIII     320        0        
+     [integer]   Mean : 0.1                      1 :  32 (10.0%)       II                     (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+8    jk1         Mean (sd) : 26 (2.3)            13 distinct values            :              320        0        
+     [integer]   min &lt; med &lt; max:                                              :              (100.0%)   (0.0%)   
+                 20 &lt; 26 &lt; 32                                                  : .                                
+                 IQR (CV) : 3 (0.1)                                          : : : .                              
+                                                                       . . : : : : : : . .                        
+
+9    jk2         Mean (sd) : 25.9 (2.4)          15 distinct values            :              320        0        
+     [integer]   min &lt; med &lt; max:                                              :              (100.0%)   (0.0%)   
+                 19 &lt; 26 &lt; 33                                              .   : .                                
+                 IQR (CV) : 3.2 (0.1)                                      : : : : : :                            
+                                                                         . : : : : : :                            
+
+10   jk3         Mean (sd) : 25.9 (2.4)          13 distinct values            :              320        0        
+     [integer]   min &lt; med &lt; max:                                              :              (100.0%)   (0.0%)   
+                 20 &lt; 26 &lt; 32                                                  :   .                              
+                 IQR (CV) : 4 (0.1)                                          . : : : .                            
+                                                                       . . : : : : : : . .                        
+
+11   con1        Mean (sd) : 3.3 (0.8)           1 :   3 ( 0.9%)                              320        0        
+     [integer]   min &lt; med &lt; max:                2 :  42 (13.1%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 149 (46.6%)       IIIIIIIII                                  
+                 IQR (CV) : 1 (0.2)              4 : 115 (35.9%)       IIIIIII                                    
+                                                 5 :  11 ( 3.4%)                                                  
+
+12   con2        Mean (sd) : 3.3 (0.9)           1 :   5 ( 1.6%)                              320        0        
+     [integer]   min &lt; med &lt; max:                2 :  43 (13.4%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 135 (42.2%)       IIIIIIII                                   
+                 IQR (CV) : 1 (0.3)              4 : 110 (34.4%)       IIIIII                                     
+                                                 5 :  27 ( 8.4%)       I                                          
+
+13   con3        Mean (sd) : 2.8 (0.7)           1 :   6 ( 1.9%)                              320        0        
+     [integer]   min &lt; med &lt; max:                2 : 114 (35.6%)       IIIIIII                (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 155 (48.4%)       IIIIIIIII                                  
+                 IQR (CV) : 1 (0.3)              4 :  42 (13.1%)       II                                         
+                                                 5 :   3 ( 0.9%)                                                  
+
+14   con4        Mean (sd) : 3.4 (0.8)           1 :   3 ( 0.9%)                              320        0        
+     [integer]   min &lt; med &lt; max:                2 :  41 (12.8%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 128 (40.0%)       IIIIIIII                                   
+                 IQR (CV) : 1 (0.2)              4 : 128 (40.0%)       IIIIIIII                                   
+                                                 5 :  20 ( 6.2%)       I                                          
+
+15   emo1        Mean (sd) : 3.3 (0.6)           2 :  18 ( 5.6%)       I                      320        0        
+     [integer]   min &lt; med &lt; max:                3 : 198 (61.9%)       IIIIIIIIIIII           (100.0%)   (0.0%)   
+                 2 &lt; 3 &lt; 5                       4 : 100 (31.2%)       IIIIII                                     
+                 IQR (CV) : 1 (0.2)              5 :   4 ( 1.2%)                                                  
+
+16   emo2        Mean (sd) : 3.7 (0.7)           2 :   7 ( 2.2%)                              320        0        
+     [integer]   min &lt; med &lt; max:                3 : 121 (37.8%)       IIIIIII                (100.0%)   (0.0%)   
+                 2 &lt; 4 &lt; 5                       4 : 162 (50.6%)       IIIIIIIIII                                 
+                 IQR (CV) : 1 (0.2)              5 :  30 ( 9.4%)       I                                          
+
+17   emo3        Mean (sd) : 3.4 (0.8)           1 :   1 ( 0.3%)                              320        0        
+     [integer]   min &lt; med &lt; max:                2 :  40 (12.5%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 133 (41.6%)       IIIIIIII                                   
+                 IQR (CV) : 1 (0.2)              4 : 124 (38.8%)       IIIIIII                                    
+                                                 5 :  22 ( 6.9%)       I                                          
+
+18   emo4        Mean (sd) : 2.7 (0.8)           0 :   2 ( 0.6%)                              320        0        
+     [integer]   min &lt; med &lt; max:                1 :  10 ( 3.1%)                              (100.0%)   (0.0%)   
+                 0 &lt; 3 &lt; 5                       2 : 114 (35.6%)       IIIIIII                                    
+                 IQR (CV) : 1 (0.3)              3 : 159 (49.7%)       IIIIIIIII                                  
+                                                 4 :  33 (10.3%)       II                                         
+                                                 5 :   2 ( 0.6%)                                                  
+
+19   int1        Mean (sd) : 2 (0.6)             1 :  68 (21.2%)       IIII                   320        0        
+     [integer]   min &lt; med &lt; max:                2 : 187 (58.4%)       IIIIIIIIIII            (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       3 :  65 (20.3%)       IIII                                       
+                 IQR (CV) : 0 (0.3)                                                                               
+
+20   int2        Mean (sd) : 2.1 (0.7)           1 :  56 (17.5%)       III                    320        0        
+     [integer]   min &lt; med &lt; max:                2 : 177 (55.3%)       IIIIIIIIIII            (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       3 :  87 (27.2%)       IIIII                                      
+                 IQR (CV) : 1 (0.3)                                                                               
+
+21   int3        Mean (sd) : 2 (0.7)             1 :  95 (29.7%)       IIIII                  320        0        
+     [integer]   min &lt; med &lt; max:                2 : 144 (45.0%)       IIIIIIIII              (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       3 :  81 (25.3%)       IIIII                                      
+                 IQR (CV) : 2 (0.4)                                                                               
+
+22   lapr        Mean (sd) : 3 (1.3)             1 :  51 (15.9%)       III                    320        0        
+     [integer]   min &lt; med &lt; max:                2 :  57 (17.8%)       III                    (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 108 (33.8%)       IIIIII                                     
+                 IQR (CV) : 2 (0.4)              4 :  52 (16.2%)       III                                        
+                                                 5 :  52 (16.2%)       III                                        
+
+23   white       Min  : 0                        0 : 136 (42.5%)       IIIIIIII               320        0        
+     [numeric]   Mean : 0.6                      1 : 184 (57.5%)       IIIIIIIIIII            (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+24   black       Min  : 0                        0 : 270 (84.4%)       IIIIIIIIIIIIIIII       320        0        
+     [numeric]   Mean : 0.2                      1 :  50 (15.6%)       III                    (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+25   hispa       Min  : 0                        0 : 249 (77.8%)       IIIIIIIIIIIIIII        320        0        
+     [numeric]   Mean : 0.2                      1 :  71 (22.2%)       IIII                   (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+26   asian       Min  : 0                        0 : 309 (96.6%)       IIIIIIIIIIIIIIIIIII    320        0        
+     [numeric]   Mean : 0                        1 :  11 ( 3.4%)                              (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+27   other       Min  : 0                        0 : 316 (98.8%)       IIIIIIIIIIIIIIIIIII    320        0        
+     [numeric]   Mean : 0                        1 :   4 ( 1.2%)                              (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+28   minority    Min  : 0                        0 : 184 (57.5%)       IIIIIIIIIII            320        0        
+     [numeric]   Mean : 0.4                      1 : 136 (42.5%)       IIIIIIII               (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+29   jks         Mean (sd) : 77.8 (6.3)          32 distinct values        . :                320        0        
+     [numeric]   min &lt; med &lt; max:                                          : : :              (100.0%)   (0.0%)   
+                 61 &lt; 78 &lt; 96                                              : : :                                  
+                 IQR (CV) : 8 (0.1)                                      . : : : .                                
+                                                                       . : : : : : .                              
+
+30   conm        Mean (sd) : 3.2 (0.4)           2.00 :  1 ( 0.3%)                            320        0        
+     [numeric]   min &lt; med &lt; max:                2.25 :  6 ( 1.9%)                            (100.0%)   (0.0%)   
+                 2 &lt; 3.2 &lt; 4.2                   2.50 : 20 ( 6.2%)     I                                          
+                 IQR (CV) : 0.5 (0.1)            2.75 : 36 (11.2%)     II                                         
+                                                 3.00 : 83 (25.9%)     IIIII                                      
+                                                 3.25 : 72 (22.5%)     IIII                                       
+                                                 3.50 : 54 (16.9%)     III                                        
+                                                 3.75 : 33 (10.3%)     II                                         
+                                                 4.00 : 13 ( 4.1%)                                                
+                                                 4.25 :  2 ( 0.6%)                                                
+
+31   emom        Mean (sd) : 3.3 (0.2)           2.50 :   1 ( 0.3%)                           320        0        
+     [numeric]   min &lt; med &lt; max:                2.75 :   9 ( 2.8%)                           (100.0%)   (0.0%)   
+                 2.5 &lt; 3.2 &lt; 3.8                 3.00 :  77 (24.1%)    IIII                                       
+                 IQR (CV) : 0.5 (0.1)            3.25 : 144 (45.0%)    IIIIIIIII                                  
+                                                 3.50 :  72 (22.5%)    IIII                                       
+                                                 3.75 :  17 ( 5.3%)    I                                          
+
+32   intm        Mean (sd) : 2 (0.6)             1.00 : 28 ( 8.8%)     I                      320        0        
+     [numeric]   min &lt; med &lt; max:                1.33!: 43 (13.4%)     II                     (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       1.67!: 48 (15.0%)     III                                        
+                 IQR (CV) : 0.7 (0.3)            2.00 : 87 (27.2%)     IIIII                                      
+                                                 2.33!: 36 (11.2%)     II                                         
+                                                 2.67!: 38 (11.9%)     II                                         
+                                                 3.00 : 40 (12.5%)     II                                         
+                                                 ! rounded                                                        
+------------------------------------------------------------------------------------------------------------------</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(male) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">count =</span> <span class="fu">n</span>(),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">exp.m =</span> <span class="fu">mean</span>(exp),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">exp.sd =</span> <span class="fu">sd</span>(exp),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">jks.m =</span> <span class="fu">mean</span>(jks),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">jks.sd =</span> <span class="fu">sd</span>(jks),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">conm.m =</span> <span class="fu">mean</span>(conm),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">conm.sd =</span> <span class="fu">sd</span>(conm),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">emom.m =</span> <span class="fu">mean</span>(emom),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">emom.sd =</span> <span class="fu">sd</span>(emom),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">intm.m =</span> <span class="fu">mean</span>(intm),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">intm.sd =</span> <span class="fu">sd</span>(intm),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">lapr.m =</span> <span class="fu">mean</span>(lapr),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">lapr.sd =</span> <span class="fu">sd</span>(lapr)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              [,1]        [,2]
+male     0.0000000   1.0000000
+count   96.0000000 224.0000000
+exp.m   37.1875000  37.5803571
+exp.sd   5.4411928   5.4024382
+jks.m   78.0208333  77.7053571
+jks.sd   7.4466229   5.7638714
+conm.m   3.0677083   3.2421875
+conm.sd  0.3914870   0.4027586
+emom.m   3.2630208   3.2533482
+emom.sd  0.2217449   0.2289084
+intm.m   1.9270833   2.0520833
+intm.sd  0.5623741   0.6070222
+lapr.m   2.7291667   3.1026786
+lapr.sd  1.2853766   1.2610736</code></pre>
+</div>
+</div>
+</section>
+<section id="group-differences" class="level2">
+<h2 class="anchored" data-anchor-id="group-differences">Group Differences</h2>
+<p>In addition to the group differences calculated above, ensure you denote any statistically significant differences between males and females on the focal variables of interest for this study.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(exp <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  exp by male
+t = -0.59484, df = 318, p-value = 0.5524
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -1.6922526  0.9065383
+sample estimates:
+mean in group 0 mean in group 1 
+       37.18750        37.58036 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jks <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  jks by male
+t = 0.4096, df = 318, p-value = 0.6824
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -1.199849  1.830801
+sample estimates:
+mean in group 0 mean in group 1 
+       78.02083        77.70536 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(conm <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  conm by male
+t = -3.5809, df = 318, p-value = 0.0003959
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.27034289 -0.07861544
+sample estimates:
+mean in group 0 mean in group 1 
+       3.067708        3.242188 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(emom <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  emom by male
+t = 0.34962, df = 318, p-value = 0.7269
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.04475851  0.06410374
+sample estimates:
+mean in group 0 mean in group 1 
+       3.263021        3.253348 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(intm <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  intm by male
+t = -1.725, df = 318, p-value = 0.0855
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.26757124  0.01757124
+sample estimates:
+mean in group 0 mean in group 1 
+       1.927083        2.052083 </code></pre>
+</div>
+</div>
+</section>
+<section id="correlations" class="level2">
+<h2 class="anchored" data-anchor-id="correlations">Correlations</h2>
+<p>For these correlation results, the top table is the Pearson product-moment correlation, the bottom table is the p-values associated with each (i.e., statistical signficance). You can create a table of correlations, report them in the text of the technical report, or both.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df.cor <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="at">select =</span> <span class="fu">c</span>(male,white,age,dis,vet,exp,jks,conm,emom,intm))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(df.cor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       male white   age   dis   vet  exp   jks  conm  emom  intm
+male   1.00 -0.02  0.00 -0.06 -0.17 0.03 -0.02  0.20 -0.02  0.10
+white -0.02  1.00  0.11 -0.05  0.14 0.16  0.15 -0.10 -0.12  0.09
+age    0.00  0.11  1.00  0.00  0.05 0.63  0.34 -0.07  0.15  0.23
+dis   -0.06 -0.05  0.00  1.00  0.11 0.01 -0.04 -0.01  0.02 -0.02
+vet   -0.17  0.14  0.05  0.11  1.00 0.08  0.24  0.25 -0.04  0.16
+exp    0.03  0.16  0.63  0.01  0.08 1.00  0.27  0.02  0.02  0.21
+jks   -0.02  0.15  0.34 -0.04  0.24 0.27  1.00  0.40 -0.22  0.64
+conm   0.20 -0.10 -0.07 -0.01  0.25 0.02  0.40  1.00  0.01  0.08
+emom  -0.02 -0.12  0.15  0.02 -0.04 0.02 -0.22  0.01  1.00 -0.12
+intm   0.10  0.09  0.23 -0.02  0.16 0.21  0.64  0.08 -0.12  1.00
+
+n= 320 
+
+
+P
+      male   white  age    dis    vet    exp    jks    conm   emom   intm  
+male         0.6581 0.9846 0.3029 0.0025 0.5524 0.6824 0.0004 0.7269 0.0855
+white 0.6581        0.0474 0.3724 0.0128 0.0031 0.0063 0.0632 0.0278 0.1146
+age   0.9846 0.0474        0.9480 0.3934 0.0000 0.0000 0.2337 0.0061 0.0000
+dis   0.3029 0.3724 0.9480        0.0563 0.8491 0.5126 0.8895 0.6655 0.7027
+vet   0.0025 0.0128 0.3934 0.0563        0.1772 0.0000 0.0000 0.4353 0.0039
+exp   0.5524 0.0031 0.0000 0.8491 0.1772        0.0000 0.7193 0.7127 0.0002
+jks   0.6824 0.0063 0.0000 0.5126 0.0000 0.0000        0.0000 0.0000 0.0000
+conm  0.0004 0.0632 0.2337 0.8895 0.0000 0.7193 0.0000        0.9117 0.1418
+emom  0.7269 0.0278 0.0061 0.6655 0.4353 0.7127 0.0000 0.9117        0.0367
+intm  0.0855 0.1146 0.0000 0.7027 0.0039 0.0002 0.0000 0.1418 0.0367       </code></pre>
+</div>
+</div>
+</section>
+<section id="regression" class="level2">
+<h2 class="anchored" data-anchor-id="regression">Regression</h2>
+<p>This is the penultimate analysis for this project, we need to demostrate the criterion-related validity of the battery. You can either report the table of the ANOVA results here, write about the results in the text of your technical report, or both.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> df, lapr <span class="sc">~</span> <span class="dv">1</span>)  <span class="co"># to obtain Total SS</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> df, lapr <span class="sc">~</span> jks)  <span class="co"># Model 2</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> df, lapr <span class="sc">~</span> exp <span class="sc">+</span> jks <span class="sc">+</span> conm <span class="sc">+</span> emom <span class="sc">+</span> intm)  <span class="co"># Model 3</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1,mod2,mod3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: lapr ~ 1
+Model 2: lapr ~ jks
+Model 3: lapr ~ exp + jks + conm + emom + intm
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    319 520.97                                  
+2    318 439.68  1    81.292 83.112 &lt; 2.2e-16 ***
+3    314 307.12  4   132.556 33.881 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm.beta</span>(.) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(.)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = lapr ~ jks, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.12746 -0.76646 -0.00664  0.80377  2.63383 
+
+Coefficients:
+            Estimate Standardized Std. Error t value Pr(&gt;|t|)    
+(Intercept) -3.23794           NA    0.81496  -3.973 8.78e-05 ***
+jks          0.08006      0.39502    0.01044   7.668 2.15e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.176 on 318 degrees of freedom
+Multiple R-squared:  0.156, Adjusted R-squared:  0.1534 
+F-statistic: 58.79 on 1 and 318 DF,  p-value: 2.148e-13</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mod3 <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm.beta</span>(.) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(.)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = lapr ~ exp + jks + conm + emom + intm, data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4765 -0.6671  0.0208  0.7253  2.2894 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(&gt;|t|)    
+(Intercept) -6.370245           NA   1.243239  -5.124 5.24e-07 ***
+exp          0.086971     0.368081   0.010747   8.093 1.29e-14 ***
+jks         -0.003004    -0.014821   0.013427  -0.224  0.82312    
+conm         0.703263     0.223843   0.155254   4.530 8.40e-06 ***
+emom         0.739402     0.131038   0.253395   2.918  0.00378 ** 
+intm         0.836621     0.390094   0.124389   6.726 8.26e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.989 on 314 degrees of freedom
+Multiple R-squared:  0.4105,    Adjusted R-squared:  0.4011 
+F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save predicted values</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>pred_jksonly <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod2)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>pred_battery <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="dominance" class="level2">
+<h2 class="anchored" data-anchor-id="dominance">Dominance</h2>
+<p>What you see reported here are the general dominance weights for each predictor included in the battery. So this is the unique portion of the R^2 (r-squared) attributable to experience, job knowledge test, conscientiousness, emotional stability, and average interview score, respectively. If you go back to the regression Model 2 results, you can compare that R^2 to these results to discuss the incremental validity of the new battery over the singular job knowledge test.</p>
+<p>You can either report these results in a table, write about them in the text of your document, or both and I would recommend both. You can <a href="https://github.com/AJThurston/dominance">take inspiration from my visualization of dominance analysis</a>, but I would recommend putting these values in an Excel chart instead of trying to replicate my visualization in R.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dom <span class="ot">&lt;-</span> <span class="fu">domin</span>(<span class="at">data =</span> df,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> lapr <span class="sc">~</span> exp <span class="sc">+</span> jks <span class="sc">+</span> conm <span class="sc">+</span> emom <span class="sc">+</span> intm,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">reg =</span> lm, </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">fitstat =</span> <span class="fu">list</span>(summary, <span class="st">"r.squared"</span>))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(dom<span class="sc">$</span>General_Dominance,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> exp  jks conm emom intm 
+0.15 0.06 0.04 0.02 0.13 </code></pre>
+</div>
+</div>
+</section>
+<section id="expectancy-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="expectancy-analysis">Expectancy analysis</h2>
+<p>This is where we will help the client to determine the cut score for the test. They accept about 20% of applicants for fire officers per year, so we’ve split the predicted scores into quintiles (fifths) so they can see those with the highest predicted job performance were most likely to have the greatest job performance in actuality.</p>
+<p>I would recommend you, again, <a href="https://github.com/AJThurston/expectancy">take inspiration from my deeper dive into expectancy charts</a>, but, again, would recommend you simply copy/paste these values into an Excel bar chart rather than trying to replicate my work in R.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_jksonly_quant =</span> <span class="fu">quantcut</span>(pred_jksonly, <span class="at">q =</span> <span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">2</span>,.<span class="dv">4</span>,.<span class="dv">6</span>,.<span class="dv">8</span>,<span class="dv">1</span>), <span class="at">labels =</span> F)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_battery_quant =</span> <span class="fu">quantcut</span>(pred_battery, <span class="at">q =</span> <span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">2</span>,.<span class="dv">4</span>,.<span class="dv">6</span>,.<span class="dv">8</span>,<span class="dv">1</span>), <span class="at">labels =</span> F))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pred_jksonly_quant) <span class="sc">%&gt;%</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(lapr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  pred_jksonly_quant     m
+               &lt;int&gt; &lt;dbl&gt;
+1                  1  2.38
+2                  2  2.66
+3                  3  2.90
+4                  4  3.70
+5                  5  3.62</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pred_battery_quant) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(lapr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  pred_battery_quant     m
+               &lt;int&gt; &lt;dbl&gt;
+1                  1  1.72
+2                  2  2.69
+3                  3  2.91
+4                  4  3.44
+5                  5  4.20</code></pre>
+</div>
+</div>
+</section>
+<section id="adverse-impact-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="adverse-impact-analyses">Adverse Impact Analyses</h2>
+<p>The goal of this project was to reduce the adverse impact of the selection system on female applicants, these last two values demonstrate exactly that. Refer back to the personnel decisions lecture on how to interpret these with the 80% rule.NOTE: I got the 80% rule backwards when I generated these data, if it’s above 80% it’s NOT considered adverse impact. The output below is notional (made up) and will not match the data analysis if you try to run this yourself.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_jksonly_pass =</span> <span class="fu">quantcut</span>(pred_jksonly, <span class="at">q =</span> <span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">80</span>,<span class="dv">1</span>), <span class="at">labels =</span> F)<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_battery_pass =</span> <span class="fu">quantcut</span>(pred_battery, <span class="at">q =</span> <span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">80</span>,<span class="dv">1</span>), <span class="at">labels =</span> F)<span class="sc">-</span><span class="dv">1</span>) </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span> male <span class="sc">+</span> pred_jksonly_pass, <span class="at">data=</span>df)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>pass_male <span class="ot">&lt;-</span> observed[<span class="dv">2</span>,<span class="dv">2</span>]</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>fail_male <span class="ot">&lt;-</span> observed[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>N_male <span class="ot">&lt;-</span> pass_male <span class="sc">+</span> fail_male</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>sr_male <span class="ot">&lt;-</span> pass_male <span class="sc">/</span> N_male</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>pass_female <span class="ot">&lt;-</span> observed[<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>fail_female <span class="ot">&lt;-</span> observed[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>N_female <span class="ot">&lt;-</span> pass_female <span class="sc">+</span> fail_female</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>sr_female <span class="ot">&lt;-</span> pass_female<span class="sc">/</span>N_female</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>jks_only_sex_ir <span class="ot">&lt;-</span> sr_female<span class="sc">/</span>sr_male </span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co"># print(paste0("SR females/males using only Job Knowledge Test: ", round(jks_only_sex_ir,2)))</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"SR females/males using only Job Knowledge Test: 0.53"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SR females/males using only Job Knowledge Test: 0.53"</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span> male <span class="sc">+</span> pred_battery_pass, <span class="at">data=</span>df)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>pass_male <span class="ot">&lt;-</span> observed[<span class="dv">2</span>,<span class="dv">2</span>]</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>fail_male <span class="ot">&lt;-</span> observed[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>N_male <span class="ot">&lt;-</span> pass_male <span class="sc">+</span> fail_male</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>sr_male <span class="ot">&lt;-</span> pass_male <span class="sc">/</span> N_male</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>pass_female <span class="ot">&lt;-</span> observed[<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>fail_female <span class="ot">&lt;-</span> observed[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>N_female <span class="ot">&lt;-</span> pass_female <span class="sc">+</span> fail_female</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>sr_female <span class="ot">&lt;-</span> pass_female <span class="sc">/</span> N_female</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>pred_battery_sex_ir <span class="ot">&lt;-</span> sr_female<span class="sc">/</span>sr_male</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="co"># print(paste0("SR females/males using new battery: ", round(pred_battery_sex_ir,2)))</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"SR females/males using new battery: 0.91"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SR females/males using new battery: 0.91"</code></pre>
+</div>
+</div>
+</section>
+<section id="final-note" class="level2">
+<h2 class="anchored" data-anchor-id="final-note">Final Note</h2>
+<p>You are welcome to use the raw data and are invited to do any additional data analyses but are not required to do so.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
