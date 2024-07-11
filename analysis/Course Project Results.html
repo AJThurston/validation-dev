@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.242">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -163,7 +134,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -172,7 +145,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(summarytools)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
@@ -189,9 +162,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="data-import" class="level2">
 <h2 class="anchored" data-anchor-id="data-import">Data Import</h2>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Capstone Dataframe.csv"</span>) </span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/validation_dataframe.csv"</span>) </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">na_if</span>(., <span class="sc">-</span><span class="dv">9</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -203,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="demographics-recode" class="level3">
 <h3 class="anchored" data-anchor-id="demographics-recode">Demographics Recode</h3>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>white <span class="ot">&lt;-</span> df<span class="sc">$</span>race <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(.,</span>
@@ -258,7 +231,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="job-knowledge" class="level3">
 <h3 class="anchored" data-anchor-id="job-knowledge">Job Knowledge</h3>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">jks =</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">c</span>(jk1, jk2, jk3))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -268,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="conscientiousness" class="level3">
 <h3 class="anchored" data-anchor-id="conscientiousness">Conscientiousness</h3>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">conm =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(con1, con2, con3, con4))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -278,7 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="emotional-stability" class="level3">
 <h3 class="anchored" data-anchor-id="emotional-stability">Emotional Stability</h3>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">emom =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(emo1, emo2, emo3, emo4))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -288,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="interview" class="level3">
 <h3 class="anchored" data-anchor-id="interview">Interview</h3>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">intm =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(int1, int2, int3))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -301,200 +274,200 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Refer back to the codebook to ensure you are tracking what values correspond to different categories (e.g., variable: male, 0 = female, 1 = male)</p>
 <p>You can use the dataframe summary to talk generally about the sample. For example, this will tell you the proportion of males in the sample, and the ‘white’ variable will report the racial/ethnic majority/minority proportion.You should also report a table or a figure of the descriptive statistics by gender in your report since the focus of this effort is to better the selection ratios in favor of female applicants.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dfSummary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data Frame Summary  
 df  
-Dimensions: 320 x 32  
+Dimensions: 323 x 33  
 Duplicates: 0  
 
 ------------------------------------------------------------------------------------------------------------------
 No   Variable    Stats / Values                  Freqs (% of Valid)    Graph                  Valid      Missing  
 ---- ----------- ------------------------------- --------------------- ---------------------- ---------- ---------
-1    id          Mean (sd) : 54633.7 (25031.5)   320 distinct values               :          320        0        
-     [integer]   min &lt; med &lt; max:                                        : . :   : :          (100.0%)   (0.0%)   
-                 10800 &lt; 55144 &lt; 99611                                 : : : : : : : . :                          
-                 IQR (CV) : 41672.5 (0.5)                              : : : : : : : : :                          
+1    id          Mean (sd) : 54781.5 (25022.8)   323 distinct values               :          323        0        
+     [integer]   min &lt; med &lt; max:                                        . . :   : :          (100.0%)   (0.0%)   
+                 10800 &lt; 55162 &lt; 99611                                 : : : : : : : . :                          
+                 IQR (CV) : 41204 (0.5)                                : : : : : : : : :                          
                                                                        : : : : : : : : :                          
 
-2    male        Min  : 0                        0 :  96 (30.0%)       IIIIII                 320        0        
-     [integer]   Mean : 0.7                      1 : 224 (70.0%)       IIIIIIIIIIIIII         (100.0%)   (0.0%)   
+2    yearh       Mean (sd) : 2009.2 (9)          30 distinct values    :                      323        0        
+     [integer]   min &lt; med &lt; max:                                      :   :   .              (100.0%)   (0.0%)   
+                 1995 &lt; 2009 &lt; 2024                                    : : : : : :                                
+                 IQR (CV) : 15.5 (0)                                   : : : : : :                                
+                                                                       : : : : : :                                
+
+3    male        Min  : 0                        0 :  97 (30.0%)       IIIIII                 323        0        
+     [integer]   Mean : 0.7                      1 : 226 (70.0%)       IIIIIIIIIIIII          (100.0%)   (0.0%)   
                  Max  : 1                                                                                         
 
-3    race        Mean (sd) : 1.8 (1)             1 : 184 (57.5%)       IIIIIIIIIII            320        0        
-     [integer]   min &lt; med &lt; max:                2 :  50 (15.6%)       III                    (100.0%)   (0.0%)   
-                 1 &lt; 1 &lt; 5                       3 :  71 (22.2%)       IIII                                       
-                 IQR (CV) : 2 (0.6)              4 :  11 ( 3.4%)                                                  
-                                                 5 :   4 ( 1.2%)                                                  
-
-4    age         Mean (sd) : 28.4 (3.2)          18 distinct values            :              320        0        
-     [integer]   min &lt; med &lt; max:                                            . :              (100.0%)   (0.0%)   
-                 20 &lt; 29 &lt; 40                                              . : :                                  
-                 IQR (CV) : 4 (0.1)                                        : : : :                                
-                                                                       . : : : : : :                              
-
-5    exp         Mean (sd) : 37.5 (5.4)          30 distinct values          : .              320        0        
-     [integer]   min &lt; med &lt; max:                                          : : :              (100.0%)   (0.0%)   
-                 21 &lt; 37 &lt; 56                                              : : :                                  
-                 IQR (CV) : 8 (0.1)                                      . : : :                                  
-                                                                         : : : : .                                
-
-6    dis         Min  : 1                        1 : 303 (94.7%)       IIIIIIIIIIIIIIIIII     320        0        
-     [integer]   Mean : 1.1                      2 :  17 ( 5.3%)       I                      (100.0%)   (0.0%)   
-                 Max  : 2                                                                                         
-
-7    vet         Min  : 0                        0 : 288 (90.0%)       IIIIIIIIIIIIIIIIII     320        0        
-     [integer]   Mean : 0.1                      1 :  32 (10.0%)       II                     (100.0%)   (0.0%)   
-                 Max  : 1                                                                                         
-
-8    jk1         Mean (sd) : 26 (2.3)            13 distinct values            :              320        0        
-     [integer]   min &lt; med &lt; max:                                              :              (100.0%)   (0.0%)   
-                 20 &lt; 26 &lt; 32                                                  : .                                
-                 IQR (CV) : 3 (0.1)                                          : : : .                              
-                                                                       . . : : : : : : . .                        
-
-9    jk2         Mean (sd) : 25.9 (2.4)          15 distinct values            :              320        0        
-     [integer]   min &lt; med &lt; max:                                              :              (100.0%)   (0.0%)   
-                 19 &lt; 26 &lt; 33                                              .   : .                                
-                 IQR (CV) : 3.2 (0.1)                                      : : : : : :                            
-                                                                         . : : : : : :                            
-
-10   jk3         Mean (sd) : 25.9 (2.4)          13 distinct values            :              320        0        
-     [integer]   min &lt; med &lt; max:                                              :              (100.0%)   (0.0%)   
-                 20 &lt; 26 &lt; 32                                                  :   .                              
-                 IQR (CV) : 4 (0.1)                                          . : : : .                            
-                                                                       . . : : : : : : . .                        
-
-11   con1        Mean (sd) : 3.3 (0.8)           1 :   3 ( 0.9%)                              320        0        
-     [integer]   min &lt; med &lt; max:                2 :  42 (13.1%)       II                     (100.0%)   (0.0%)   
-                 1 &lt; 3 &lt; 5                       3 : 149 (46.6%)       IIIIIIIII                                  
-                 IQR (CV) : 1 (0.2)              4 : 115 (35.9%)       IIIIIII                                    
-                                                 5 :  11 ( 3.4%)                                                  
-
-12   con2        Mean (sd) : 3.3 (0.9)           1 :   5 ( 1.6%)                              320        0        
-     [integer]   min &lt; med &lt; max:                2 :  43 (13.4%)       II                     (100.0%)   (0.0%)   
-                 1 &lt; 3 &lt; 5                       3 : 135 (42.2%)       IIIIIIII                                   
-                 IQR (CV) : 1 (0.3)              4 : 110 (34.4%)       IIIIII                                     
-                                                 5 :  27 ( 8.4%)       I                                          
-
-13   con3        Mean (sd) : 2.8 (0.7)           1 :   6 ( 1.9%)                              320        0        
-     [integer]   min &lt; med &lt; max:                2 : 114 (35.6%)       IIIIIII                (100.0%)   (0.0%)   
-                 1 &lt; 3 &lt; 5                       3 : 155 (48.4%)       IIIIIIIII                                  
-                 IQR (CV) : 1 (0.3)              4 :  42 (13.1%)       II                                         
-                                                 5 :   3 ( 0.9%)                                                  
-
-14   con4        Mean (sd) : 3.4 (0.8)           1 :   3 ( 0.9%)                              320        0        
-     [integer]   min &lt; med &lt; max:                2 :  41 (12.8%)       II                     (100.0%)   (0.0%)   
-                 1 &lt; 3 &lt; 5                       3 : 128 (40.0%)       IIIIIIII                                   
-                 IQR (CV) : 1 (0.2)              4 : 128 (40.0%)       IIIIIIII                                   
-                                                 5 :  20 ( 6.2%)       I                                          
-
-15   emo1        Mean (sd) : 3.3 (0.6)           2 :  18 ( 5.6%)       I                      320        0        
-     [integer]   min &lt; med &lt; max:                3 : 198 (61.9%)       IIIIIIIIIIII           (100.0%)   (0.0%)   
-                 2 &lt; 3 &lt; 5                       4 : 100 (31.2%)       IIIIII                                     
-                 IQR (CV) : 1 (0.2)              5 :   4 ( 1.2%)                                                  
-
-16   emo2        Mean (sd) : 3.7 (0.7)           2 :   7 ( 2.2%)                              320        0        
-     [integer]   min &lt; med &lt; max:                3 : 121 (37.8%)       IIIIIII                (100.0%)   (0.0%)   
-                 2 &lt; 4 &lt; 5                       4 : 162 (50.6%)       IIIIIIIIII                                 
-                 IQR (CV) : 1 (0.2)              5 :  30 ( 9.4%)       I                                          
-
-17   emo3        Mean (sd) : 3.4 (0.8)           1 :   1 ( 0.3%)                              320        0        
-     [integer]   min &lt; med &lt; max:                2 :  40 (12.5%)       II                     (100.0%)   (0.0%)   
-                 1 &lt; 3 &lt; 5                       3 : 133 (41.6%)       IIIIIIII                                   
-                 IQR (CV) : 1 (0.2)              4 : 124 (38.8%)       IIIIIII                                    
-                                                 5 :  22 ( 6.9%)       I                                          
-
-18   emo4        Mean (sd) : 2.7 (0.8)           0 :   2 ( 0.6%)                              320        0        
-     [integer]   min &lt; med &lt; max:                1 :  10 ( 3.1%)                              (100.0%)   (0.0%)   
-                 0 &lt; 3 &lt; 5                       2 : 114 (35.6%)       IIIIIII                                    
-                 IQR (CV) : 1 (0.3)              3 : 159 (49.7%)       IIIIIIIII                                  
-                                                 4 :  33 (10.3%)       II                                         
+4    race        Mean (sd) : 1.7 (1)             1 : 187 (57.9%)       IIIIIIIIIII            323        0        
+     [integer]   min &lt; med &lt; max:                2 :  49 (15.2%)       III                    (100.0%)   (0.0%)   
+                 1 &lt; 1 &lt; 5                       3 :  73 (22.6%)       IIII                                       
+                 IQR (CV) : 2 (0.6)              4 :  12 ( 3.7%)                                                  
                                                  5 :   2 ( 0.6%)                                                  
 
-19   int1        Mean (sd) : 2 (0.6)             1 :  68 (21.2%)       IIII                   320        0        
-     [integer]   min &lt; med &lt; max:                2 : 187 (58.4%)       IIIIIIIIIII            (100.0%)   (0.0%)   
-                 1 &lt; 2 &lt; 3                       3 :  65 (20.3%)       IIII                                       
+5    age         Mean (sd) : 28.8 (3)            16 distinct values          . :              323        0        
+     [integer]   min &lt; med &lt; max:                                            : :              (100.0%)   (0.0%)   
+                 21 &lt; 29 &lt; 38                                              : : : :                                
+                 IQR (CV) : 4 (0.1)                                        : : : : :                              
+                                                                       . : : : : : :                              
+
+6    exp         Mean (sd) : 37.7 (5.5)          29 distinct values          :                323        0        
+     [integer]   min &lt; med &lt; max:                                          : : .              (100.0%)   (0.0%)   
+                 23 &lt; 37 &lt; 52                                              : : :                                  
+                 IQR (CV) : 7 (0.1)                                      . : : :                                  
+                                                                         : : : : :                                
+
+7    dis         Min  : 0                        0 : 306 (94.7%)       IIIIIIIIIIIIIIIIII     323        0        
+     [integer]   Mean : 0.1                      1 :  17 ( 5.3%)       I                      (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+8    vet         Min  : 0                        0 : 290 (89.8%)       IIIIIIIIIIIIIIIII      323        0        
+     [integer]   Mean : 0.1                      1 :  33 (10.2%)       II                     (100.0%)   (0.0%)   
+                 Max  : 1                                                                                         
+
+9    jk1         Mean (sd) : 26 (2.3)            16 distinct values          :                323        0        
+     [integer]   min &lt; med &lt; max:                                            : .              (100.0%)   (0.0%)   
+                 18 &lt; 26 &lt; 33                                                : :                                  
+                 IQR (CV) : 2 (0.1)                                        : : :                                  
+                                                                         . : : : : .                              
+
+10   jk2         Mean (sd) : 25.9 (2.3)          14 distinct values                :          323        0        
+     [integer]   min &lt; med &lt; max:                                                  :          (100.0%)   (0.0%)   
+                 19 &lt; 26 &lt; 32                                                : : . :                              
+                 IQR (CV) : 3.5 (0.1)                                        : : : :                              
+                                                                       . . . : : : : : . .                        
+
+11   jk3         Mean (sd) : 26.1 (2.4)          15 distinct values          : .              323        0        
+     [integer]   min &lt; med &lt; max:                                          . : :              (100.0%)   (0.0%)   
+                 19 &lt; 26 &lt; 34                                              : : :                                  
+                 IQR (CV) : 4 (0.1)                                        : : : :                                
+                                                                       . . : : : :                                
+
+12   con1        Mean (sd) : 3.3 (0.8)           1 :   2 ( 0.6%)                              323        0        
+     [integer]   min &lt; med &lt; max:                2 :  45 (13.9%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 148 (45.8%)       IIIIIIIII                                  
+                 IQR (CV) : 1 (0.2)              4 : 116 (35.9%)       IIIIIII                                    
+                                                 5 :  12 ( 3.7%)                                                  
+
+13   con2        Mean (sd) : 3.4 (0.9)           1 :   6 ( 1.9%)                              323        0        
+     [integer]   min &lt; med &lt; max:                2 :  47 (14.6%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 129 (39.9%)       IIIIIII                                    
+                 IQR (CV) : 1 (0.3)              4 : 109 (33.7%)       IIIIII                                     
+                                                 5 :  32 ( 9.9%)       I                                          
+
+14   con3        Mean (sd) : 2.8 (0.7)           1 :   8 ( 2.5%)                              323        0        
+     [integer]   min &lt; med &lt; max:                2 :  95 (29.4%)       IIIII                  (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 179 (55.4%)       IIIIIIIIIII                                
+                 IQR (CV) : 1 (0.3)              4 :  40 (12.4%)       II                                         
+                                                 5 :   1 ( 0.3%)                                                  
+
+15   con4        Mean (sd) : 3.3 (0.8)           1 :   2 ( 0.6%)                              323        0        
+     [integer]   min &lt; med &lt; max:                2 :  39 (12.1%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 156 (48.3%)       IIIIIIIII                                  
+                 IQR (CV) : 1 (0.2)              4 : 106 (32.8%)       IIIIII                                     
+                                                 5 :  20 ( 6.2%)       I                                          
+
+16   emo1        Mean (sd) : 3.2 (0.6)           1 :   1 ( 0.3%)                              323        0        
+     [integer]   min &lt; med &lt; max:                2 :  25 ( 7.7%)       I                      (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 198 (61.3%)       IIIIIIIIIIII                               
+                 IQR (CV) : 1 (0.2)              4 :  97 (30.0%)       IIIIII                                     
+                                                 5 :   2 ( 0.6%)                                                  
+
+17   emo2        Mean (sd) : 3.7 (0.7)           2 :  15 ( 4.6%)                              323        0        
+     [integer]   min &lt; med &lt; max:                3 : 107 (33.1%)       IIIIII                 (100.0%)   (0.0%)   
+                 2 &lt; 4 &lt; 5                       4 : 165 (51.1%)       IIIIIIIIII                                 
+                 IQR (CV) : 1 (0.2)              5 :  36 (11.1%)       II                                         
+
+18   emo3        Mean (sd) : 3.4 (0.8)           1 :   3 ( 0.9%)                              323        0        
+     [integer]   min &lt; med &lt; max:                2 :  36 (11.1%)       II                     (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 149 (46.1%)       IIIIIIIII                                  
+                 IQR (CV) : 1 (0.2)              4 : 107 (33.1%)       IIIIII                                     
+                                                 5 :  28 ( 8.7%)       I                                          
+
+19   emo4        Mean (sd) : 2.7 (0.8)           1 :  18 ( 5.6%)       I                      323        0        
+     [integer]   min &lt; med &lt; max:                2 : 111 (34.4%)       IIIIII                 (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 154 (47.7%)       IIIIIIIII                                  
+                 IQR (CV) : 1 (0.3)              4 :  38 (11.8%)       II                                         
+                                                 5 :   2 ( 0.6%)                                                  
+
+20   int1        Mean (sd) : 2 (0.6)             1 :  68 (21.1%)       IIII                   323        0        
+     [integer]   min &lt; med &lt; max:                2 : 190 (58.8%)       IIIIIIIIIII            (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       3 :  65 (20.1%)       IIII                                       
                  IQR (CV) : 0 (0.3)                                                                               
 
-20   int2        Mean (sd) : 2.1 (0.7)           1 :  56 (17.5%)       III                    320        0        
-     [integer]   min &lt; med &lt; max:                2 : 177 (55.3%)       IIIIIIIIIII            (100.0%)   (0.0%)   
-                 1 &lt; 2 &lt; 3                       3 :  87 (27.2%)       IIIII                                      
+21   int2        Mean (sd) : 2.1 (0.7)           1 :  58 (18.0%)       III                    323        0        
+     [integer]   min &lt; med &lt; max:                2 : 178 (55.1%)       IIIIIIIIIII            (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       3 :  87 (26.9%)       IIIII                                      
                  IQR (CV) : 1 (0.3)                                                                               
 
-21   int3        Mean (sd) : 2 (0.7)             1 :  95 (29.7%)       IIIII                  320        0        
-     [integer]   min &lt; med &lt; max:                2 : 144 (45.0%)       IIIIIIIII              (100.0%)   (0.0%)   
-                 1 &lt; 2 &lt; 3                       3 :  81 (25.3%)       IIIII                                      
-                 IQR (CV) : 2 (0.4)                                                                               
+22   int3        Mean (sd) : 2 (0.7)             1 :  97 (30.0%)       IIIIII                 323        0        
+     [integer]   min &lt; med &lt; max:                2 : 145 (44.9%)       IIIIIIII               (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       3 :  81 (25.1%)       IIIII                                      
+                 IQR (CV) : 1.5 (0.4)                                                                             
 
-22   lapr        Mean (sd) : 3 (1.3)             1 :  51 (15.9%)       III                    320        0        
-     [integer]   min &lt; med &lt; max:                2 :  57 (17.8%)       III                    (100.0%)   (0.0%)   
-                 1 &lt; 3 &lt; 5                       3 : 108 (33.8%)       IIIIII                                     
-                 IQR (CV) : 2 (0.4)              4 :  52 (16.2%)       III                                        
-                                                 5 :  52 (16.2%)       III                                        
+23   lapr        Mean (sd) : 3 (1.3)             1 :  52 (16.1%)       III                    323        0        
+     [integer]   min &lt; med &lt; max:                2 :  58 (18.0%)       III                    (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5                       3 : 109 (33.7%)       IIIIII                                     
+                 IQR (CV) : 2 (0.4)              4 :  52 (16.1%)       III                                        
+                                                 5 :  52 (16.1%)       III                                        
 
-23   white       Min  : 0                        0 : 136 (42.5%)       IIIIIIII               320        0        
-     [numeric]   Mean : 0.6                      1 : 184 (57.5%)       IIIIIIIIIII            (100.0%)   (0.0%)   
+24   white       Min  : 0                        0 : 136 (42.1%)       IIIIIIII               323        0        
+     [numeric]   Mean : 0.6                      1 : 187 (57.9%)       IIIIIIIIIII            (100.0%)   (0.0%)   
                  Max  : 1                                                                                         
 
-24   black       Min  : 0                        0 : 270 (84.4%)       IIIIIIIIIIIIIIII       320        0        
-     [numeric]   Mean : 0.2                      1 :  50 (15.6%)       III                    (100.0%)   (0.0%)   
+25   black       Min  : 0                        0 : 274 (84.8%)       IIIIIIIIIIIIIIII       323        0        
+     [numeric]   Mean : 0.2                      1 :  49 (15.2%)       III                    (100.0%)   (0.0%)   
                  Max  : 1                                                                                         
 
-25   hispa       Min  : 0                        0 : 249 (77.8%)       IIIIIIIIIIIIIII        320        0        
-     [numeric]   Mean : 0.2                      1 :  71 (22.2%)       IIII                   (100.0%)   (0.0%)   
+26   hispa       Min  : 0                        0 : 250 (77.4%)       IIIIIIIIIIIIIII        323        0        
+     [numeric]   Mean : 0.2                      1 :  73 (22.6%)       IIII                   (100.0%)   (0.0%)   
                  Max  : 1                                                                                         
 
-26   asian       Min  : 0                        0 : 309 (96.6%)       IIIIIIIIIIIIIIIIIII    320        0        
-     [numeric]   Mean : 0                        1 :  11 ( 3.4%)                              (100.0%)   (0.0%)   
+27   asian       Min  : 0                        0 : 311 (96.3%)       IIIIIIIIIIIIIIIIIII    323        0        
+     [numeric]   Mean : 0                        1 :  12 ( 3.7%)                              (100.0%)   (0.0%)   
                  Max  : 1                                                                                         
 
-27   other       Min  : 0                        0 : 316 (98.8%)       IIIIIIIIIIIIIIIIIII    320        0        
-     [numeric]   Mean : 0                        1 :   4 ( 1.2%)                              (100.0%)   (0.0%)   
+28   other       Min  : 0                        0 : 321 (99.4%)       IIIIIIIIIIIIIIIIIII    323        0        
+     [numeric]   Mean : 0                        1 :   2 ( 0.6%)                              (100.0%)   (0.0%)   
                  Max  : 1                                                                                         
 
-28   minority    Min  : 0                        0 : 184 (57.5%)       IIIIIIIIIII            320        0        
-     [numeric]   Mean : 0.4                      1 : 136 (42.5%)       IIIIIIII               (100.0%)   (0.0%)   
+29   minority    Min  : 0                        0 : 187 (57.9%)       IIIIIIIIIII            323        0        
+     [numeric]   Mean : 0.4                      1 : 136 (42.1%)       IIIIIIII               (100.0%)   (0.0%)   
                  Max  : 1                                                                                         
 
-29   jks         Mean (sd) : 77.8 (6.3)          32 distinct values        . :                320        0        
-     [numeric]   min &lt; med &lt; max:                                          : : :              (100.0%)   (0.0%)   
-                 61 &lt; 78 &lt; 96                                              : : :                                  
-                 IQR (CV) : 8 (0.1)                                      . : : : .                                
-                                                                       . : : : : : .                              
+30   jks         Mean (sd) : 78 (6.2)            36 distinct values            :              323        0        
+     [numeric]   min &lt; med &lt; max:                                            . : :            (100.0%)   (0.0%)   
+                 56 &lt; 78 &lt; 98                                                : : :                                
+                 IQR (CV) : 7.5 (0.1)                                        : : : .                              
+                                                                         . : : : : :                              
 
-30   conm        Mean (sd) : 3.2 (0.4)           2.00 :  1 ( 0.3%)                            320        0        
-     [numeric]   min &lt; med &lt; max:                2.25 :  6 ( 1.9%)                            (100.0%)   (0.0%)   
-                 2 &lt; 3.2 &lt; 4.2                   2.50 : 20 ( 6.2%)     I                                          
-                 IQR (CV) : 0.5 (0.1)            2.75 : 36 (11.2%)     II                                         
-                                                 3.00 : 83 (25.9%)     IIIII                                      
-                                                 3.25 : 72 (22.5%)     IIII                                       
-                                                 3.50 : 54 (16.9%)     III                                        
-                                                 3.75 : 33 (10.3%)     II                                         
-                                                 4.00 : 13 ( 4.1%)                                                
-                                                 4.25 :  2 ( 0.6%)                                                
+31   conm        Mean (sd) : 3.2 (0.4)           11 distinct values          : . .            323        0        
+     [numeric]   min &lt; med &lt; max:                                            : : :            (100.0%)   (0.0%)   
+                 2 &lt; 3.2 &lt; 4.5                                               : : :                                
+                 IQR (CV) : 0.5 (0.1)                                    . : : : : .                              
+                                                                       : : : : : : : :                            
 
-31   emom        Mean (sd) : 3.3 (0.2)           2.50 :   1 ( 0.3%)                           320        0        
-     [numeric]   min &lt; med &lt; max:                2.75 :   9 ( 2.8%)                           (100.0%)   (0.0%)   
-                 2.5 &lt; 3.2 &lt; 3.8                 3.00 :  77 (24.1%)    IIII                                       
-                 IQR (CV) : 0.5 (0.1)            3.25 : 144 (45.0%)    IIIIIIIII                                  
-                                                 3.50 :  72 (22.5%)    IIII                                       
-                                                 3.75 :  17 ( 5.3%)    I                                          
+32   emom        Mean (sd) : 3.2 (0.2)           2.75 :  10 ( 3.1%)                           323        0        
+     [numeric]   min &lt; med &lt; max:                3.00 :  85 (26.3%)    IIIII                  (100.0%)   (0.0%)   
+                 2.8 &lt; 3.2 &lt; 3.8                 3.25 : 142 (44.0%)    IIIIIIII                                   
+                 IQR (CV) : 0.5 (0.1)            3.50 :  78 (24.1%)    IIII                                       
+                                                 3.75 :   8 ( 2.5%)                                               
 
-32   intm        Mean (sd) : 2 (0.6)             1.00 : 28 ( 8.8%)     I                      320        0        
-     [numeric]   min &lt; med &lt; max:                1.33!: 43 (13.4%)     II                     (100.0%)   (0.0%)   
-                 1 &lt; 2 &lt; 3                       1.67!: 48 (15.0%)     III                                        
-                 IQR (CV) : 0.7 (0.3)            2.00 : 87 (27.2%)     IIIII                                      
-                                                 2.33!: 36 (11.2%)     II                                         
-                                                 2.67!: 38 (11.9%)     II                                         
-                                                 3.00 : 40 (12.5%)     II                                         
+33   intm        Mean (sd) : 2 (0.6)             1.00 : 27 ( 8.4%)     I                      323        0        
+     [numeric]   min &lt; med &lt; max:                1.33!: 42 (13.0%)     II                     (100.0%)   (0.0%)   
+                 1 &lt; 2 &lt; 3                       1.67!: 53 (16.4%)     III                                        
+                 IQR (CV) : 0.7 (0.3)            2.00 : 78 (24.1%)     IIII                                       
+                                                 2.33!: 51 (15.8%)     III                                        
+                                                 2.67!: 39 (12.1%)     II                                         
+                                                 3.00 : 33 (10.2%)     II                                         
                                                  ! rounded                                                        
 ------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(male) <span class="sc">%&gt;%</span></span>
@@ -518,19 +491,19 @@ No   Variable    Stats / Values                  Freqs (% of Valid)    Graph    
 <div class="cell-output cell-output-stdout">
 <pre><code>              [,1]        [,2]
 male     0.0000000   1.0000000
-count   96.0000000 224.0000000
-exp.m   37.1875000  37.5803571
-exp.sd   5.4411928   5.4024382
-jks.m   78.0208333  77.7053571
-jks.sd   7.4466229   5.7638714
-conm.m   3.0677083   3.2421875
-conm.sd  0.3914870   0.4027586
-emom.m   3.2630208   3.2533482
-emom.sd  0.2217449   0.2289084
-intm.m   1.9270833   2.0520833
-intm.sd  0.5623741   0.6070222
-lapr.m   2.7291667   3.1026786
-lapr.sd  1.2853766   1.2610736</code></pre>
+count   97.0000000 226.0000000
+exp.m   37.4329897  37.7787611
+exp.sd   5.6197331   5.4409713
+jks.m   76.4329897  78.7123894
+jks.sd   6.8097773   5.8462924
+conm.m   3.2268041   3.1670354
+conm.sd  0.4240223   0.4288585
+emom.m   3.2525773   3.2367257
+emom.sd  0.1926205   0.2219627
+intm.m   2.0790378   1.9808260
+intm.sd  0.6268919   0.5543330
+lapr.m   3.1340206   2.9159292
+lapr.sd  1.2215842   1.2985507</code></pre>
 </div>
 </div>
 </section>
@@ -538,7 +511,7 @@ lapr.sd  1.2853766   1.2610736</code></pre>
 <h2 class="anchored" data-anchor-id="group-differences">Group Differences</h2>
 <p>In addition to the group differences calculated above, ensure you denote any statistically significant differences between males and females on the focal variables of interest for this study.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(exp <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -547,15 +520,15 @@ lapr.sd  1.2853766   1.2610736</code></pre>
     Two Sample t-test
 
 data:  exp by male
-t = -0.59484, df = 318, p-value = 0.5524
+t = -0.51839, df = 321, p-value = 0.6045
 alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
 95 percent confidence interval:
- -1.6922526  0.9065383
+ -1.6580343  0.9664915
 sample estimates:
 mean in group 0 mean in group 1 
-       37.18750        37.58036 </code></pre>
+       37.43299        37.77876 </code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jks <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -564,15 +537,15 @@ mean in group 0 mean in group 1
     Two Sample t-test
 
 data:  jks by male
-t = 0.4096, df = 318, p-value = 0.6824
+t = -3.0533, df = 321, p-value = 0.002453
 alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
 95 percent confidence interval:
- -1.199849  1.830801
+ -3.748138 -0.810661
 sample estimates:
 mean in group 0 mean in group 1 
-       78.02083        77.70536 </code></pre>
+       76.43299        78.71239 </code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(conm <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -581,15 +554,15 @@ mean in group 0 mean in group 1
     Two Sample t-test
 
 data:  conm by male
-t = -3.5809, df = 318, p-value = 0.0003959
+t = 1.152, df = 321, p-value = 0.2502
 alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
 95 percent confidence interval:
- -0.27034289 -0.07861544
+ -0.04230231  0.16183976
 sample estimates:
 mean in group 0 mean in group 1 
-       3.067708        3.242188 </code></pre>
+       3.226804        3.167035 </code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(emom <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -598,15 +571,15 @@ mean in group 0 mean in group 1
     Two Sample t-test
 
 data:  emom by male
-t = 0.34962, df = 318, p-value = 0.7269
+t = 0.61135, df = 321, p-value = 0.5414
 alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
 95 percent confidence interval:
- -0.04475851  0.06410374
+ -0.03516032  0.06686363
 sample estimates:
 mean in group 0 mean in group 1 
-       3.263021        3.253348 </code></pre>
+       3.252577        3.236726 </code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(intm <span class="sc">~</span> male, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -615,13 +588,13 @@ mean in group 0 mean in group 1
     Two Sample t-test
 
 data:  intm by male
-t = -1.725, df = 318, p-value = 0.0855
+t = 1.4023, df = 321, p-value = 0.1618
 alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
 95 percent confidence interval:
- -0.26757124  0.01757124
+ -0.03957829  0.23600197
 sample estimates:
 mean in group 0 mean in group 1 
-       1.927083        2.052083 </code></pre>
+       2.079038        1.980826 </code></pre>
 </div>
 </div>
 </section>
@@ -629,40 +602,40 @@ mean in group 0 mean in group 1
 <h2 class="anchored" data-anchor-id="correlations">Correlations</h2>
 <p>For these correlation results, the top table is the Pearson product-moment correlation, the bottom table is the p-values associated with each (i.e., statistical signficance). You can create a table of correlations, report them in the text of the technical report, or both.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df.cor <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="at">select =</span> <span class="fu">c</span>(male,white,age,dis,vet,exp,jks,conm,emom,intm))</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(df.cor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>       male white   age   dis   vet  exp   jks  conm  emom  intm
-male   1.00 -0.02  0.00 -0.06 -0.17 0.03 -0.02  0.20 -0.02  0.10
-white -0.02  1.00  0.11 -0.05  0.14 0.16  0.15 -0.10 -0.12  0.09
-age    0.00  0.11  1.00  0.00  0.05 0.63  0.34 -0.07  0.15  0.23
-dis   -0.06 -0.05  0.00  1.00  0.11 0.01 -0.04 -0.01  0.02 -0.02
-vet   -0.17  0.14  0.05  0.11  1.00 0.08  0.24  0.25 -0.04  0.16
-exp    0.03  0.16  0.63  0.01  0.08 1.00  0.27  0.02  0.02  0.21
-jks   -0.02  0.15  0.34 -0.04  0.24 0.27  1.00  0.40 -0.22  0.64
-conm   0.20 -0.10 -0.07 -0.01  0.25 0.02  0.40  1.00  0.01  0.08
-emom  -0.02 -0.12  0.15  0.02 -0.04 0.02 -0.22  0.01  1.00 -0.12
-intm   0.10  0.09  0.23 -0.02  0.16 0.21  0.64  0.08 -0.12  1.00
+<pre><code>       male white   age   dis   vet   exp   jks  conm  emom  intm
+male   1.00  0.04  0.06 -0.06 -0.11  0.03  0.17 -0.06 -0.03 -0.08
+white  0.04  1.00  0.03 -0.05  0.16  0.07 -0.01  0.08  0.06  0.15
+age    0.06  0.03  1.00  0.03  0.15  0.64  0.30 -0.08  0.02  0.32
+dis   -0.06 -0.05  0.03  1.00  0.15  0.00  0.06  0.04  0.03 -0.05
+vet   -0.11  0.16  0.15  0.15  1.00  0.05  0.17  0.20  0.01  0.18
+exp    0.03  0.07  0.64  0.00  0.05  1.00  0.29  0.08 -0.07  0.27
+jks    0.17 -0.01  0.30  0.06  0.17  0.29  1.00  0.44 -0.25  0.61
+conm  -0.06  0.08 -0.08  0.04  0.20  0.08  0.44  1.00 -0.09  0.16
+emom  -0.03  0.06  0.02  0.03  0.01 -0.07 -0.25 -0.09  1.00 -0.06
+intm  -0.08  0.15  0.32 -0.05  0.18  0.27  0.61  0.16 -0.06  1.00
 
-n= 320 
+n= 323 
 
 
 P
       male   white  age    dis    vet    exp    jks    conm   emom   intm  
-male         0.6581 0.9846 0.3029 0.0025 0.5524 0.6824 0.0004 0.7269 0.0855
-white 0.6581        0.0474 0.3724 0.0128 0.0031 0.0063 0.0632 0.0278 0.1146
-age   0.9846 0.0474        0.9480 0.3934 0.0000 0.0000 0.2337 0.0061 0.0000
-dis   0.3029 0.3724 0.9480        0.0563 0.8491 0.5126 0.8895 0.6655 0.7027
-vet   0.0025 0.0128 0.3934 0.0563        0.1772 0.0000 0.0000 0.4353 0.0039
-exp   0.5524 0.0031 0.0000 0.8491 0.1772        0.0000 0.7193 0.7127 0.0002
-jks   0.6824 0.0063 0.0000 0.5126 0.0000 0.0000        0.0000 0.0000 0.0000
-conm  0.0004 0.0632 0.2337 0.8895 0.0000 0.7193 0.0000        0.9117 0.1418
-emom  0.7269 0.0278 0.0061 0.6655 0.4353 0.7127 0.0000 0.9117        0.0367
-intm  0.0855 0.1146 0.0000 0.7027 0.0039 0.0002 0.0000 0.1418 0.0367       </code></pre>
+male         0.4391 0.2516 0.3045 0.0415 0.6045 0.0025 0.2502 0.5414 0.1618
+white 0.4391        0.6371 0.3541 0.0032 0.2201 0.8822 0.1362 0.2699 0.0087
+age   0.2516 0.6371        0.5400 0.0076 0.0000 0.0000 0.1635 0.7165 0.0000
+dis   0.3045 0.3541 0.5400        0.0072 0.9829 0.3079 0.5204 0.6456 0.3490
+vet   0.0415 0.0032 0.0076 0.0072        0.3542 0.0027 0.0004 0.8093 0.0010
+exp   0.6045 0.2201 0.0000 0.9829 0.3542        0.0000 0.1339 0.2416 0.0000
+jks   0.0025 0.8822 0.0000 0.3079 0.0027 0.0000        0.0000 0.0000 0.0000
+conm  0.2502 0.1362 0.1635 0.5204 0.0004 0.1339 0.0000        0.0942 0.0048
+emom  0.5414 0.2699 0.7165 0.6456 0.8093 0.2416 0.0000 0.0942        0.2647
+intm  0.1618 0.0087 0.0000 0.3490 0.0010 0.0000 0.0000 0.0048 0.2647       </code></pre>
 </div>
 </div>
 </section>
@@ -670,7 +643,7 @@ intm  0.0855 0.1146 0.0000 0.7027 0.0039 0.0002 0.0000 0.1418 0.0367       </cod
 <h2 class="anchored" data-anchor-id="regression">Regression</h2>
 <p>This is the penultimate analysis for this project, we need to demostrate the criterion-related validity of the battery. You can either report the table of the ANOVA results here, write about the results in the text of your technical report, or both.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> df, lapr <span class="sc">~</span> <span class="dv">1</span>)  <span class="co"># to obtain Total SS</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> df, lapr <span class="sc">~</span> jks)  <span class="co"># Model 2</span></span>
@@ -684,13 +657,13 @@ Model 1: lapr ~ 1
 Model 2: lapr ~ jks
 Model 3: lapr ~ exp + jks + conm + emom + intm
   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-1    319 520.97                                  
-2    318 439.68  1    81.292 83.112 &lt; 2.2e-16 ***
-3    314 307.12  4   132.556 33.881 &lt; 2.2e-16 ***
+1    322 525.89                                  
+2    321 489.08  1    36.808 31.253 4.889e-08 ***
+3    317 373.34  4   115.737 24.568 &lt; 2.2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">%&gt;%</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm.beta</span>(.) <span class="sc">%&gt;%</span></span>
@@ -703,20 +676,20 @@ lm(formula = lapr ~ jks, data = df)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--3.12746 -0.76646 -0.00664  0.80377  2.63383 
+-2.63123 -0.92564 -0.03419  0.91154  3.10561 
 
 Coefficients:
             Estimate Standardized Std. Error t value Pr(&gt;|t|)    
-(Intercept) -3.23794           NA    0.81496  -3.973 8.78e-05 ***
-jks          0.08006      0.39502    0.01044   7.668 2.15e-13 ***
+(Intercept) -1.25363           NA    0.86437  -1.450    0.148    
+jks          0.05428      0.26456    0.01104   4.915 1.42e-06 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.176 on 318 degrees of freedom
-Multiple R-squared:  0.156, Adjusted R-squared:  0.1534 
-F-statistic: 58.79 on 1 and 318 DF,  p-value: 2.148e-13</code></pre>
+Residual standard error: 1.234 on 321 degrees of freedom
+Multiple R-squared:  0.06999,   Adjusted R-squared:  0.0671 
+F-statistic: 24.16 on 1 and 321 DF,  p-value: 1.418e-06</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mod3 <span class="sc">%&gt;%</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm.beta</span>(.) <span class="sc">%&gt;%</span></span>
@@ -728,25 +701,25 @@ Call:
 lm(formula = lapr ~ exp + jks + conm + emom + intm, data = df)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--3.4765 -0.6671  0.0208  0.7253  2.2894 
+     Min       1Q   Median       3Q      Max 
+-2.72787 -0.76964 -0.06286  0.80619  3.07498 
 
 Coefficients:
-             Estimate Standardized Std. Error t value Pr(&gt;|t|)    
-(Intercept) -6.370245           NA   1.243239  -5.124 5.24e-07 ***
-exp          0.086971     0.368081   0.010747   8.093 1.29e-14 ***
-jks         -0.003004    -0.014821   0.013427  -0.224  0.82312    
-conm         0.703263     0.223843   0.155254   4.530 8.40e-06 ***
-emom         0.739402     0.131038   0.253395   2.918  0.00378 ** 
-intm         0.836621     0.390094   0.124389   6.726 8.26e-11 ***
+            Estimate Standardized Std. Error t value Pr(&gt;|t|)    
+(Intercept) -3.28197           NA    1.47706  -2.222 0.026991 *  
+exp          0.09054      0.38887    0.01159   7.811 8.40e-14 ***
+jks         -0.01690     -0.08239    0.01438  -1.175 0.240747    
+conm         0.80186      0.26832    0.16006   5.010 9.08e-07 ***
+emom         0.21608      0.03608    0.29549   0.731 0.465149    
+intm         0.45607      0.20622    0.13631   3.346 0.000919 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.989 on 314 degrees of freedom
-Multiple R-squared:  0.4105,    Adjusted R-squared:  0.4011 
-F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.085 on 317 degrees of freedom
+Multiple R-squared:  0.2901,    Adjusted R-squared:  0.2789 
+F-statistic:  25.9 on 5 and 317 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save predicted values</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>pred_jksonly <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod2)</span>
@@ -759,7 +732,7 @@ F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>What you see reported here are the general dominance weights for each predictor included in the battery. So this is the unique portion of the R^2 (r-squared) attributable to experience, job knowledge test, conscientiousness, emotional stability, and average interview score, respectively. If you go back to the regression Model 2 results, you can compare that R^2 to these results to discuss the incremental validity of the new battery over the singular job knowledge test.</p>
 <p>You can either report these results in a table, write about them in the text of your document, or both and I would recommend both. You can <a href="https://github.com/AJThurston/dominance">take inspiration from my visualization of dominance analysis</a>, but I would recommend putting these values in an Excel chart instead of trying to replicate my visualization in R.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dom <span class="ot">&lt;-</span> <span class="fu">domin</span>(<span class="at">data =</span> df,</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> lapr <span class="sc">~</span> exp <span class="sc">+</span> jks <span class="sc">+</span> conm <span class="sc">+</span> emom <span class="sc">+</span> intm,</span>
@@ -769,7 +742,7 @@ F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> exp  jks conm emom intm 
-0.15 0.06 0.04 0.02 0.13 </code></pre>
+0.16 0.02 0.06 0.00 0.05 </code></pre>
 </div>
 </div>
 </section>
@@ -778,7 +751,7 @@ F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>This is where we will help the client to determine the cut score for the test. They accept about 20% of applicants for fire officers per year, so we’ve split the predicted scores into quintiles (fifths) so they can see those with the highest predicted job performance were most likely to have the greatest job performance in actuality.</p>
 <p>I would recommend you, again, <a href="https://github.com/AJThurston/expectancy">take inspiration from my deeper dive into expectancy charts</a>, but, again, would recommend you simply copy/paste these values into an Excel bar chart rather than trying to replicate my work in R.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_jksonly_quant =</span> <span class="fu">quantcut</span>(pred_jksonly, <span class="at">q =</span> <span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">2</span>,.<span class="dv">4</span>,.<span class="dv">6</span>,.<span class="dv">8</span>,<span class="dv">1</span>), <span class="at">labels =</span> F)) <span class="sc">%&gt;%</span></span>
@@ -792,13 +765,13 @@ F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre><code># A tibble: 5 × 2
   pred_jksonly_quant     m
                &lt;int&gt; &lt;dbl&gt;
-1                  1  2.38
-2                  2  2.66
-3                  3  2.90
-4                  4  3.70
-5                  5  3.62</code></pre>
+1                  1  2.43
+2                  2  3.02
+3                  3  3.04
+4                  4  3.12
+5                  5  3.41</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pred_battery_quant) <span class="sc">%&gt;%</span></span>
@@ -808,11 +781,11 @@ F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre><code># A tibble: 5 × 2
   pred_battery_quant     m
                &lt;int&gt; &lt;dbl&gt;
-1                  1  1.72
-2                  2  2.69
-3                  3  2.91
-4                  4  3.44
-5                  5  4.20</code></pre>
+1                  1  2.05
+2                  2  2.58
+3                  3  2.98
+4                  4  3.34
+5                  5  3.95</code></pre>
 </div>
 </div>
 </section>
@@ -820,7 +793,7 @@ F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2 class="anchored" data-anchor-id="adverse-impact-analyses">Adverse Impact Analyses</h2>
 <p>The goal of this project was to reduce the adverse impact of the selection system on female applicants, these last two values demonstrate exactly that. Refer back to the personnel decisions lecture on how to interpret these with the 80% rule.NOTE: I got the 80% rule backwards when I generated these data, if it’s above 80% it’s NOT considered adverse impact. The output below is notional (made up) and will not match the data analysis if you try to run this yourself.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_jksonly_pass =</span> <span class="fu">quantcut</span>(pred_jksonly, <span class="at">q =</span> <span class="fu">c</span>(<span class="dv">0</span>,.<span class="dv">80</span>,<span class="dv">1</span>), <span class="at">labels =</span> F)<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
@@ -847,7 +820,7 @@ F-statistic: 43.73 on 5 and 314 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "SR females/males using only Job Knowledge Test: 0.53"</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>observed <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span> male <span class="sc">+</span> pred_battery_pass, <span class="at">data=</span>df)</span>
@@ -906,9 +879,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -944,10 +931,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -957,8 +961,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -970,9 +983,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1013,6 +1262,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

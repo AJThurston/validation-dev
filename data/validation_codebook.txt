@@ -1,5 +1,7 @@
 `id`: Applicant ID number
 
+`yearh`: Year hired in YYYY format
+
 `male`: Applicant sex is male  
  0. Female  
  1. Male  

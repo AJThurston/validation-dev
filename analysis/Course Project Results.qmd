@@ -29,7 +29,7 @@ library(domir)
 
 ## Data Import
 ```{r import}
-df <- read.csv("Capstone Dataframe.csv") 
+df <- read.csv("../data/validation_dataframe.csv") 
 df <- df %>%
   mutate(across(where(is.numeric), ~na_if(., -9))) %>%
   filter(complete.cases(.))
@@ -259,10 +259,58 @@ fail_female <- observed[1,1]
 N_female <- pass_female + fail_female
 sr_female <- pass_female / N_female
 
+# Race 
+# Job Knowledge Test Only
+df$majority <- 1-df$minority
+observed <- xtabs(~ majority + pred_jksonly_pass, data=df)
 
-pred_battery_sex_ir <- sr_female/sr_male
-# print(paste0("SR females/males using new battery: ", round(pred_battery_sex_ir,2)))
-print("SR females/males using new battery: 0.91")
+pass_majority <- observed[1,2]
+fail_majority <- observed[1,1]
+N_majority <- pass_majority + fail_majority
+sr_majority <- pass_majority / N_majority
+
+pass_minority <- observed[2,2]
+fail_minority <- observed[2,1]
+N_minority <- pass_minority + fail_minority
+
+sr_minority <- pass_minority / N_minority
+
+jks_only_race_ir <- sr_minority/sr_majority
+
+# Larger Battery
+observed <- xtabs(~ majority + pred_battery_pass, data=df)
+
+pass_majority <- observed[1,2]
+fail_majority <- observed[1,1]
+N_majority <- pass_majority + fail_majority
+sr_majority <- pass_majority / N_majority
+
+pass_minority <- observed[2,2]
+fail_minority <- observed[2,1]
+N_minority <- pass_minority + fail_minority
+
+sr_minority <- pass_minority / N_minority
+
+pred_battery_race_ir <- sr_minority/sr_majority
+
+irs <- tibble(
+  Ratio = c(
+    "Sex Impact Ratio - Job Knowledge Test Only: ",
+    "Sex Impact Ratio - Larger Battery:",
+    "Sex Impact Ratio - Job Knowledge Test Only: ",
+    "Sex Impact Ratio - Larger Battery:"
+  ),
+  Value = c(
+    floor(jks_only_sex_ir*1000+.5)/1000,
+    floor(pred_battery_sex_ir*1000+.5)/1000,
+    floor(jks_only_race_ir*1000+.5)/1000,
+    floor(pred_battery_race_ir*1000+.5)/1000
+  )
+)
+
+irs <- irs %>%
+  mutate(`Adverse Impact` = Value < .8)
+irs
 ```
 
 ## Final Note

@@ -1,7 +1,7 @@
 ---
-title: "Capstone"
+title: "Validation Dataset Generation Code"
 author: "AJ Thurston"
-date: "2023-07-14"
+date: "2024-07-11"
 format: html
 editor: source
 link-citations: true
@@ -26,6 +26,8 @@ sessionInfo()
 ## Data Codebook
 
 `id`: Applicant ID number
+
+`yearh`: Year hired in YYYY format
 
 `male`: Applicant sex is male\
 0. Female\
@@ -330,6 +332,12 @@ df <- df %>%
   mutate(perf_final = quantcut(perf, q = c(0,.16,.34,.68,.84,1), labels = F))
 freq(df$perf_final)
 ```
+# Data Recode - Year Hired
+
+```{r year_hired}
+df$yearh <- runif(dim(df)[1], min = 0, max = 1) %>%
+  cut(30, labels = F)+1994
+```
 
 ## Regression
 
@@ -507,6 +515,7 @@ df$id <- sample(size = dim(df)[1], x=c(10000:99999), replace = FALSE)
 df_final <- df %>%
   select(c(
     id,
+    yearh,
     male_f,
     race_final,
     age_final,
@@ -533,8 +542,11 @@ names(df_final)[names(df_final) == 'perf_final'] <- 'lapr'
 
 names(df_final) <- sub('_.*', "", names(df_final))
 dfSummary(df_final)
+getwd()
 
-filename <- paste("C:/Users/AJ Thurston/OneDrive/Desktop/df_",format(Sys.time(), "%Y-%M-%d_%H%M"),".csv", sep = "")
+# filename <- paste("C:/Users/AJ Thurston/OneDrive/Desktop/df_",format(Sys.time(), "%Y-%M-%d_%H%M"),".csv", sep = "")
+
+filename <- paste("/Users/ajthurston/Documents/GitHub/validation/data/df_",format(Sys.time(), "%Y-%M-%d_%H%M"),".csv", sep = "")
 
 write.csv(df_final, filename, row.names = FALSE) 
 ```
