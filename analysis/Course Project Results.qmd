@@ -151,12 +151,19 @@ t.test(jks ~ male, var.equal=TRUE, data = df)
 t.test(conm ~ male, var.equal=TRUE, data = df)
 t.test(emom ~ male, var.equal=TRUE, data = df)
 t.test(intm ~ male, var.equal=TRUE, data = df)
+
+t.test(exp ~ white, var.equal=TRUE, data = df)
+t.test(jks ~ white, var.equal=TRUE, data = df)
+t.test(conm ~ white, var.equal=TRUE, data = df)
+t.test(emom ~ white, var.equal=TRUE, data = df)
+t.test(intm ~ white, var.equal=TRUE, data = df)
 ```
 ## Correlations
 
 For these correlation results, the top table is the Pearson product-moment correlation, the bottom table is the p-values associated with each (i.e., statistical signficance). You can create a table of correlations, report them in the text of the technical report, or both.
 
 ```{r correlations}
+library(gt)
 df.cor <- df %>%
   subset(select = c(male,white,age,dis,vet,exp,jks,conm,emom,intm))
 rcorr(as.matrix(df.cor))
@@ -212,11 +219,11 @@ df <- df %>%
 
 df %>%
   group_by(pred_jksonly_quant) %>%
-  summarize(m = mean(lapr))
+  dplyr::summarize(m = mean(lapr))
 
 df %>%
   group_by(pred_battery_quant) %>%
-  summarize(m = mean(lapr))
+  dplyr::summarize(m = mean(lapr))
 ```
 
 ## Adverse Impact Analyses
@@ -226,91 +233,60 @@ The goal of this project was to reduce the adverse impact of the selection syste
 ```{r ai}
 df <- df %>%
   mutate(pred_jksonly_pass = quantcut(pred_jksonly, q = c(0,.80,1), labels = F)-1) %>%
-  mutate(pred_battery_pass = quantcut(pred_battery, q = c(0,.80,1), labels = F)-1) 
+  mutate(pred_jksonly_quant = quantcut(pred_jksonly, q = c(0,.2,.4,.6,.8,1), labels = F)) %>%
+  mutate(pred_battery_pass = quantcut(pred_battery, q = c(0,.80,1), labels = F)-1) %>%
+  mutate(pred_battery_quant = quantcut(pred_battery, q = c(0,.2,.4,.6,.8,1), labels = F))
 
-observed <- xtabs(~ male + pred_jksonly_pass, data=df)
+air <- function(data, maj_group, pass_test){
+  cont_tbl <-   xtabs(as.formula(paste("~", maj_group," + ",pass_test)), data = data)
+  pass_maj <- cont_tbl[2,2]
+  fail_maj <- cont_tbl[2,1]
+  N_maj    <- pass_maj + fail_maj
+  sr_maj   <- pass_maj / N_maj
+  pass_min <- cont_tbl[1,2]
+  fail_min <- cont_tbl[1,1]
+  N_min    <- pass_min + fail_min
+  sr_min   <- pass_min / N_min
+  advrs_ir <- sr_maj / sr_min
+  return(advrs_ir)
+}
 
-pass_male <- observed[2,2]
-fail_male <- observed[2,1]
-N_male <- pass_male + fail_male
-sr_male <- pass_male / N_male
-
-pass_female <- observed[1,2]
-fail_female <- observed[1,1]
-N_female <- pass_female + fail_female
-
-sr_female <- pass_female/N_female
-
-
-jks_only_sex_ir <- sr_female/sr_male 
-# print(paste0("SR females/males using only Job Knowledge Test: ", round(jks_only_sex_ir,2)))
-print("SR females/males using only Job Knowledge Test: 0.53")
-
-# ---
-observed <- xtabs(~ male + pred_battery_pass, data=df)
-
-pass_male <- observed[2,2]
-fail_male <- observed[2,1]
-N_male <- pass_male + fail_male
-sr_male <- pass_male / N_male
-
-pass_female <- observed[1,2]
-fail_female <- observed[1,1]
-N_female <- pass_female + fail_female
-sr_female <- pass_female / N_female
-
-# Race 
-# Job Knowledge Test Only
-df$majority <- 1-df$minority
-observed <- xtabs(~ majority + pred_jksonly_pass, data=df)
-
-pass_majority <- observed[1,2]
-fail_majority <- observed[1,1]
-N_majority <- pass_majority + fail_majority
-sr_majority <- pass_majority / N_majority
-
-pass_minority <- observed[2,2]
-fail_minority <- observed[2,1]
-N_minority <- pass_minority + fail_minority
-
-sr_minority <- pass_minority / N_minority
-
-jks_only_race_ir <- sr_minority/sr_majority
-
-# Larger Battery
-observed <- xtabs(~ majority + pred_battery_pass, data=df)
-
-pass_majority <- observed[1,2]
-fail_majority <- observed[1,1]
-N_majority <- pass_majority + fail_majority
-sr_majority <- pass_majority / N_majority
-
-pass_minority <- observed[2,2]
-fail_minority <- observed[2,1]
-N_minority <- pass_minority + fail_minority
-
-sr_minority <- pass_minority / N_minority
-
-pred_battery_race_ir <- sr_minority/sr_majority
-
+# Summary Table
 irs <- tibble(
   Ratio = c(
     "Sex Impact Ratio - Job Knowledge Test Only: ",
     "Sex Impact Ratio - Larger Battery:",
-    "Sex Impact Ratio - Job Knowledge Test Only: ",
-    "Sex Impact Ratio - Larger Battery:"
+    "Race Impact Ratio - Job Knowledge Test Only: ",
+    "Race Impact Ratio - Larger Battery:"
   ),
   Value = c(
-    floor(jks_only_sex_ir*1000+.5)/1000,
-    floor(pred_battery_sex_ir*1000+.5)/1000,
-    floor(jks_only_race_ir*1000+.5)/1000,
-    floor(pred_battery_race_ir*1000+.5)/1000
+    air(data = df, maj_group =  "male", pass_test =  "pred_jksonly_pass"),
+    air(data = df, maj_group =  "male", pass_test =  "pred_battery_pass"),
+    air(data = df, maj_group =  "white", pass_test =  "pred_jksonly_pass"),
+    air(data = df, maj_group =  "white", pass_test =  "pred_battery_pass")
   )
 )
 
 irs <- irs %>%
+  mutate(Value = floor(Value*1000+.5)/1000) %>%
   mutate(`Adverse Impact` = Value < .8)
 irs
+```
+
+```{r diffpred}
+# Grand-mean centering predicted values
+df <- df %>%
+  mutate(pred_jksonly_cent = pred_jksonly - mean(pred_jksonly, na.rm = TRUE)) %>%
+  mutate(pred_battery_cent = pred_battery - mean(pred_battery, na.rm = TRUE))
+
+ggplot(df, aes(x = pred_jksonly, y = lapr, color = as.factor(male), group = male)) +
+  geom_point() +
+  # geom_line() +
+  # labs(title = "Differential Prediction Analysis",
+  #      x = "Quantile",
+  #      y = "Mean Performance",
+  #      color = "System") +
+  theme_minimal()
 ```
 
 ## Final Note

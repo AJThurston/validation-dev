@@ -381,20 +381,15 @@ df <- df %>%
   mutate(pred_battery_pass = quantcut(pred_battery, q = c(0,.80,1), labels = F)-1) %>%
   mutate(pred_battery_quant = quantcut(pred_battery, q = c(0,.2,.4,.6,.8,1), labels = F))
 
-# freq(df$pred_battery_pass)
-# freq(df$pred_battery_quant)
-# freq(df$pred_jksonly_pass)
-# freq(df$pred_jksonly_quant)
-
 exp_jksonly <- df %>%
   group_by(pred_jksonly_quant) %>%
-  summarize(m = mean(perf_final)) %>%
+  dplyr::summarize(m = mean(perf_final)) %>%
   rename(quant = pred_jksonly_quant) %>%
   mutate(system = "jksonly")
 
 exp_battery <- df %>%
   group_by(pred_battery_quant) %>%
-  summarize(m = mean(perf_final)) %>%
+  dplyr::summarize(m = mean(perf_final)) %>%
   rename(quant = pred_battery_quant) %>%
   mutate(system = "battery")
 
@@ -417,90 +412,38 @@ exp %>%
 ## Adverse Impact Analyses
 
 ```{r ai}
-# Sex 
-# Job Knowledge Test Only
-observed <- xtabs(~ male_f + pred_jksonly_pass, data=df)
-
-pass_male <- observed[2,2]
-fail_male <- observed[2,1]
-N_male <- pass_male + fail_male
-sr_male <- pass_male / N_male
-
-pass_female <- observed[1,2]
-fail_female <- observed[1,1]
-N_female <- pass_female + fail_female
-
-sr_female <- pass_female/N_female
-
-jks_only_sex_ir <- sr_female/sr_male
-
-# Larger Battery
-observed <- xtabs(~ male_f + pred_battery_pass, data=df)
-
-pass_male <- observed[2,2]
-fail_male <- observed[2,1]
-N_male <- pass_male + fail_male
-sr_male <- pass_male / N_male
-
-pass_female <- observed[1,2]
-fail_female <- observed[1,1]
-N_female <- pass_female + fail_female
-sr_female <- pass_female / N_female
-
-pred_battery_sex_ir <- sr_female/sr_male
-
-
-# Race 
-# Job Knowledge Test Only
-df$majority <- 1-df$minority
-observed <- xtabs(~ majority + pred_jksonly_pass, data=df)
-
-pass_majority <- observed[1,2]
-fail_majority <- observed[1,1]
-N_majority <- pass_majority + fail_majority
-sr_majority <- pass_majority / N_majority
-
-pass_minority <- observed[2,2]
-fail_minority <- observed[2,1]
-N_minority <- pass_minority + fail_minority
-
-sr_minority <- pass_minority / N_minority
-
-jks_only_race_ir <- sr_minority/sr_majority
-
-# Larger Battery
-observed <- xtabs(~ majority + pred_battery_pass, data=df)
-
-pass_majority <- observed[1,2]
-fail_majority <- observed[1,1]
-N_majority <- pass_majority + fail_majority
-sr_majority <- pass_majority / N_majority
-
-pass_minority <- observed[2,2]
-fail_minority <- observed[2,1]
-N_minority <- pass_minority + fail_minority
-
-sr_minority <- pass_minority / N_minority
-
-pred_battery_race_ir <- sr_minority/sr_majority
+air <- function(data, maj_group, pass_test){
+  cont_tbl <-   xtabs(as.formula(paste("~", maj_group," + ",pass_test)), data = data)
+  pass_maj <- cont_tbl[2,2]
+  fail_maj <- cont_tbl[2,1]
+  N_maj    <- pass_maj + fail_maj
+  sr_maj   <- pass_maj / N_maj
+  pass_min <- cont_tbl[1,2]
+  fail_min <- cont_tbl[1,1]
+  N_min    <- pass_min + fail_min
+  sr_min   <- pass_min / N_min
+  advrs_ir <- sr_maj / sr_min
+  return(advrs_ir)
+}
 
 # Summary Table
 irs <- tibble(
   Ratio = c(
     "Sex Impact Ratio - Job Knowledge Test Only: ",
     "Sex Impact Ratio - Larger Battery:",
-    "Sex Impact Ratio - Job Knowledge Test Only: ",
-    "Sex Impact Ratio - Larger Battery:"
+    "Race Impact Ratio - Job Knowledge Test Only: ",
+    "Race Impact Ratio - Larger Battery:"
   ),
   Value = c(
-    floor(jks_only_sex_ir*1000+.5)/1000,
-    floor(pred_battery_sex_ir*1000+.5)/1000,
-    floor(jks_only_race_ir*1000+.5)/1000,
-    floor(pred_battery_race_ir*1000+.5)/1000
+    air(data = df, maj_group =  "male_f", pass_test =  "pred_jksonly_pass"),
+    air(data = df, maj_group =  "male_f", pass_test =  "pred_battery_pass"),
+    air(data = df, maj_group =  "white_f", pass_test =  "pred_jksonly_pass"),
+    air(data = df, maj_group =  "white_f", pass_test =  "pred_battery_pass")
   )
 )
 
 irs <- irs %>%
+  mutate(Value = floor(Value*1000+.5)/1000) %>%
   mutate(`Adverse Impact` = Value < .8)
 irs
 ```
@@ -546,7 +489,9 @@ getwd()
 
 # filename <- paste("C:/Users/AJ Thurston/OneDrive/Desktop/df_",format(Sys.time(), "%Y-%M-%d_%H%M"),".csv", sep = "")
 
-filename <- paste("/Users/ajthurston/Documents/GitHub/validation/data/df_",format(Sys.time(), "%Y-%M-%d_%H%M"),".csv", sep = "")
+filename <- paste("/Users/ajthurston/Documents/GitHub/validation/data/df_",format(Sys.time(), "%Y-%m-%d_%H%M"),".csv", sep = "")
+write.csv(df_final, filename, row.names = FALSE) 
 
+filename <- "/Users/ajthurston/Documents/GitHub/validation/data/validation_dataframe.csv"
 write.csv(df_final, filename, row.names = FALSE) 
 ```
